@@ -2,7 +2,6 @@ import type {
   ExportConverter,
   ExportInput,
   ExportOutput,
-  ResolvedTheme,
 } from "../core/types.js";
 
 async function loadExcelJs() {
@@ -64,7 +63,7 @@ function detectDelimiter(content: string): string {
 
 function sanitizeExcelSheetName(name: string): string {
   return name
-    .replace(/[\[\]:*?/\\]/g, "_")
+    .replace(/[[\]:*?/\\]/g, "_")
     .trim()
     .slice(0, 31) || "Sheet";
 }

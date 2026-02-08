@@ -45,7 +45,6 @@ export function findThemeFile(startPath: string): string | null {
     ? dirname(startPath)
     : resolve(dirname(startPath));
 
-  const root = dirname(dir);
   const visited = new Set<string>();
 
   while (!visited.has(dir)) {
@@ -117,11 +116,12 @@ function resolveInheritance(
   // Recursively resolve the base
   const resolvedBase = resolveInheritance(base, chain);
 
-  // Merge child on top of resolved base
-  const { extends: _, ...childWithoutExtends } = theme;
+  // Merge child on top of resolved base, excluding "extends"
+  const childCopy = { ...theme };
+  delete childCopy.extends;
   return deepMerge(
     resolvedBase as Record<string, unknown>,
-    childWithoutExtends as Record<string, unknown>,
+    childCopy as Record<string, unknown>,
   ) as RawTheme;
 }
 

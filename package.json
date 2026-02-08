@@ -15,7 +15,7 @@
     "node": ">=18"
   },
   "scripts": {
-    "build": "tsdown",
+    "build": "tsdown && cp -r src/themes dist/themes && cp -r src/skills dist/skills",
     "dev": "tsdown --watch",
     "test": "vitest run",
     "test:watch": "vitest",

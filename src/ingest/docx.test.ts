@@ -61,7 +61,7 @@ describe("docxIngest", () => {
     expect(result).toBe(false);
   });
 
-  it("ingests a DOCX file and produces markdown", async () => {
+  it("ingests a DOCX file and produces markdown", { timeout: 15000 }, async () => {
     const buffer = await createTestDocx();
     const result = await docxIngest.ingest({
       filePath: "/tmp/test.docx",

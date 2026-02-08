@@ -16,7 +16,7 @@ async function loadTurndown() {
 }
 
 function rtfFromString(
-  rtfToHTML: { fromString: Function },
+  rtfToHTML: { fromString: (content: string, callback: (err: Error | null, html: string) => void) => void },
   content: string,
 ): Promise<string> {
   return new Promise((resolve, reject) => {

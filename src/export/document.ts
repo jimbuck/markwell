@@ -5,7 +5,6 @@ import type {
   ResolvedTheme,
 } from "../core/types.js";
 import type {
-  Root,
   Heading,
   Paragraph as MdParagraph,
   Text,
@@ -23,7 +22,6 @@ import type {
   Image,
   PhrasingContent,
   BlockContent,
-  ThematicBreak,
 } from "mdast";
 import { parseMarkdown } from "./utils/markdown-parser.js";
 

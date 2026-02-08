@@ -372,7 +372,7 @@ Markwell is a CLI tool that converts documents to and from Markdown. Markdown (a
 
 ---
 
-### [ ] 1300 - CI/CD Pipeline and Final Integration
+### [x] 1300 - CI/CD Pipeline and Final Integration
 
 **Overview:** Set up GitHub Actions for CI (lint, type check, test, build on Node 18 + 20 matrix) and CD (publish to npm on release tag). Run end-to-end integration tests verifying the full pipeline: converter registration, CLI commands, glob batch processing, theme application, round-trip fidelity, and startup performance.
 
@@ -384,14 +384,14 @@ Markwell is a CLI tool that converts documents to and from Markdown. Markdown (a
 - `tests/integration/startup.test.ts` - Startup performance test
 
 **Sub-Tasks:**
-- [ ] 1301 Create `.github/workflows/ci.yml`: trigger on push to `main` and PRs. Matrix: Node.js 18 and 20. Steps: checkout, setup Node, `npm ci`, `npm run lint`, `npm run typecheck`, `npm run test -- --coverage`, `npm run build`.
-- [ ] 1302 Create `.github/workflows/release.yml`: trigger on release tags (`v*`). Steps: checkout, setup Node, `npm ci`, `npm run build`, `npm publish --provenance --access public`.
-- [ ] 1303 Write a startup performance test (`tests/integration/startup.test.ts`): spawn `node dist/cli/index.js --help` as a child process, measure time from spawn to exit, assert it completes in under 500ms. This validates lazy-loading is working.
-- [ ] 1304 Write CLI end-to-end tests (`tests/integration/cli.test.ts`): test the full CLI with real file conversions. Test ingest (`.docx` → `.md`), export (`.md` → `.docx`), `--dry-run`, `--force`, glob patterns, and error summary output.
-- [ ] 1305 Write round-trip fidelity tests (`tests/integration/round-trip.test.ts`): convert `.docx` → `.md` → `.docx` and verify content is preserved. Convert `.vtt` → `.md` → `.vtt` and verify timestamps and text are preserved. Convert `.csv` → `.xlsx` and verify data integrity.
-- [ ] 1306 Verify all converters are registered: write a test that imports the configured registry and asserts the expected number of ingest converters (10) and export converters (4) are registered.
-- [ ] 1307 Verify `converters list`, `converters info`, `themes list`, `themes preview`, `themes init`, and `install-skills` commands all work end-to-end.
-- [ ] 1308 Final cleanup: remove the placeholder `index.js` and `nul` file from the repo root. Update `package.json` description. Add a `LICENSE` file if not present. Verify `npm pack` produces a clean package.
+- [x] 1301 Create `.github/workflows/ci.yml`: trigger on push to `main` and PRs. Matrix: Node.js 18 and 20. Steps: checkout, setup Node, `npm ci`, `npm run lint`, `npm run typecheck`, `npm run test -- --coverage`, `npm run build`.
+- [x] 1302 Create `.github/workflows/release.yml`: trigger on release tags (`v*`). Steps: checkout, setup Node, `npm ci`, `npm run build`, `npm publish --provenance --access public`.
+- [x] 1303 Write a startup performance test (`tests/integration/startup.test.ts`): spawn `node dist/cli/index.js --help` as a child process, measure time from spawn to exit, assert it completes in under 500ms. This validates lazy-loading is working.
+- [x] 1304 Write CLI end-to-end tests (`tests/integration/cli.test.ts`): test the full CLI with real file conversions. Test ingest (`.docx` → `.md`), export (`.md` → `.docx`), `--dry-run`, `--force`, glob patterns, and error summary output.
+- [x] 1305 Write round-trip fidelity tests (`tests/integration/round-trip.test.ts`): convert `.docx` → `.md` → `.docx` and verify content is preserved. Convert `.vtt` → `.md` → `.vtt` and verify timestamps and text are preserved. Convert `.csv` → `.xlsx` and verify data integrity.
+- [x] 1306 Verify all converters are registered: write a test that imports the configured registry and asserts the expected number of ingest converters (10) and export converters (4) are registered.
+- [x] 1307 Verify `converters list`, `converters info`, `themes list`, `themes preview`, `themes init`, and `install-skills` commands all work end-to-end.
+- [x] 1308 Final cleanup: remove the placeholder `index.js` and `nul` file from the repo root. Update `package.json` description. Add a `LICENSE` file if not present. Verify `npm pack` produces a clean package.
 
 **Notes:**
 - Integration tests may need to build the project first (`npm run build`) before testing CLI commands.

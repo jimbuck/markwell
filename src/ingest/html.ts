@@ -1,6 +1,5 @@
 import type {
   IngestConverter,
-  CanProcessInput,
   IngestInput,
   IngestOutput,
 } from "../core/types.js";
@@ -14,10 +13,7 @@ export const htmlIngest: IngestConverter = {
   name: "html",
   extensions: [".html", ".htm"],
 
-  async canProcess(_input: CanProcessInput): Promise<boolean> {
-    // Extension match is sufficient for HTML files
-    return true;
-  },
+  canProcess: async () => true,
 
   async ingest(input: IngestInput): Promise<IngestOutput> {
     const TurndownService = await loadTurndown();
