@@ -95,7 +95,7 @@ Markwell is a CLI tool that converts documents to and from Markdown. Markdown (a
 
 ---
 
-### [ ] 0400 - Ingest Converters: DOCX, XLSX, PPTX (Office Formats)
+### [x] 0400 - Ingest Converters: DOCX, XLSX, PPTX (Office Formats)
 
 **Overview:** Implement the three Office format ingest converters. DOCX uses `mammoth` to produce Markdown. XLSX uses `exceljs` to produce a directory of CSV files (one per sheet). PPTX uses `markitdown` to convert slides to Markdown. All three use OOXML zip signature detection in `canProcess`.
 
@@ -127,7 +127,7 @@ Markwell is a CLI tool that converts documents to and from Markdown. Markdown (a
 
 ---
 
-### [ ] 0500 - Ingest Converters: VTT, SRT, HTML, RTF (Text-Based Formats)
+### [x] 0500 - Ingest Converters: VTT, SRT, HTML, RTF (Text-Based Formats)
 
 **Overview:** Implement ingest converters for text-based formats. VTT and SRT parse timestamped transcripts into a shared Markdown structure (timestamps + text). HTML uses `turndown` for conversion. RTF uses an RTF parser for basic formatting preservation.
 
@@ -143,7 +143,7 @@ Markwell is a CLI tool that converts documents to and from Markdown. Markdown (a
 - `tests/fixtures/` - Sample text-format files for testing
 
 **Sub-Tasks:**
-- [ ] 0501 Define the shared transcript Markdown format. Design the Markdown structure that both VTT and SRT will produce — e.g., each cue as a block with timestamp line and text line. Document this format in a comment at the top of `src/ingest/vtt.ts` so the export transcript converter (task 1000) can parse it back. Example format:
+- [x] 0501 Define the shared transcript Markdown format. Design the Markdown structure that both VTT and SRT will produce — e.g., each cue as a block with timestamp line and text line. Document this format in a comment at the top of `src/ingest/vtt.ts` so the export transcript converter (task 1000) can parse it back. Example format:
   ```
   ## Transcript
 
@@ -153,15 +153,15 @@ Markwell is a CLI tool that converts documents to and from Markdown. Markdown (a
   **[00:00:05.000 --> 00:00:08.200]**
   Another segment without a speaker label.
   ```
-- [ ] 0502 Implement the VTT ingest converter in `src/ingest/vtt.ts`: `name: "vtt"`, `extensions: [".vtt"]`, `canProcess` validates the `WEBVTT` header in the first line. The `ingest` method parses cues (timestamp lines, text lines, speaker labels from `<v>` tags) and produces the shared transcript Markdown format.
-- [ ] 0503 Create sample `.vtt` test fixture (`tests/fixtures/sample.vtt`) with multiple cues, speaker labels (`<v>` tags), and multi-line cue text. Write tests verifying correct Markdown output with timestamps and speaker labels.
-- [ ] 0504 Implement the SRT ingest converter in `src/ingest/srt.ts`: `name: "srt"`, `extensions: [".srt"]`, `canProcess` validates the SRT format (starts with sequential number, followed by timestamp line with `-->`, then text). The `ingest` method parses cues and produces the same shared Markdown format as VTT, but without speaker labels.
-- [ ] 0505 Create sample `.srt` test fixture (`tests/fixtures/sample.srt`) with multiple cues and multi-line text. Write tests verifying correct Markdown output matching the shared transcript format.
-- [ ] 0506 Implement the HTML ingest converter in `src/ingest/html.ts`: `name: "html"`, `extensions: [".html", ".htm"]`, `canProcess` returns `true` for any file with these extensions (no content inspection needed — extension is sufficient). The `ingest` method lazy-loads `turndown` and converts the HTML to Markdown. Configure Turndown to preserve headings, links, lists, tables, images, bold, and italic.
-- [ ] 0507 Create sample `.html` test fixture (`tests/fixtures/sample.html`) with headings, paragraphs, a list, a table, a link, an image, and bold/italic text. Write tests verifying the Markdown output preserves all these elements.
-- [ ] 0508 Implement the RTF ingest converter in `src/ingest/rtf.ts`: `name: "rtf"`, `extensions: [".rtf"]`, `canProcess` checks for the `{\rtf` header in the first bytes. The `ingest` method lazy-loads an RTF parser and converts to Markdown, preserving bold, italic, headings, and lists.
-- [ ] 0509 Create sample `.rtf` test fixture (`tests/fixtures/sample.rtf`) with basic formatting. Write tests verifying the Markdown output.
-- [ ] 0510 Register all four converters in `src/cli/setup-registry.ts`, verify `converters list` displays them.
+- [x] 0502 Implement the VTT ingest converter in `src/ingest/vtt.ts`: `name: "vtt"`, `extensions: [".vtt"]`, `canProcess` validates the `WEBVTT` header in the first line. The `ingest` method parses cues (timestamp lines, text lines, speaker labels from `<v>` tags) and produces the shared transcript Markdown format.
+- [x] 0503 Create sample `.vtt` test fixture (`tests/fixtures/sample.vtt`) with multiple cues, speaker labels (`<v>` tags), and multi-line cue text. Write tests verifying correct Markdown output with timestamps and speaker labels.
+- [x] 0504 Implement the SRT ingest converter in `src/ingest/srt.ts`: `name: "srt"`, `extensions: [".srt"]`, `canProcess` validates the SRT format (starts with sequential number, followed by timestamp line with `-->`, then text). The `ingest` method parses cues and produces the same shared Markdown format as VTT, but without speaker labels.
+- [x] 0505 Create sample `.srt` test fixture (`tests/fixtures/sample.srt`) with multiple cues and multi-line text. Write tests verifying correct Markdown output matching the shared transcript format.
+- [x] 0506 Implement the HTML ingest converter in `src/ingest/html.ts`: `name: "html"`, `extensions: [".html", ".htm"]`, `canProcess` returns `true` for any file with these extensions (no content inspection needed — extension is sufficient). The `ingest` method lazy-loads `turndown` and converts the HTML to Markdown. Configure Turndown to preserve headings, links, lists, tables, images, bold, and italic.
+- [x] 0507 Create sample `.html` test fixture (`tests/fixtures/sample.html`) with headings, paragraphs, a list, a table, a link, an image, and bold/italic text. Write tests verifying the Markdown output preserves all these elements.
+- [x] 0508 Implement the RTF ingest converter in `src/ingest/rtf.ts`: `name: "rtf"`, `extensions: [".rtf"]`, `canProcess` checks for the `{\rtf` header in the first bytes. The `ingest` method lazy-loads an RTF parser and converts to Markdown, preserving bold, italic, headings, and lists.
+- [x] 0509 Create sample `.rtf` test fixture (`tests/fixtures/sample.rtf`) with basic formatting. Write tests verifying the Markdown output.
+- [x] 0510 Register all four converters in `src/cli/setup-registry.ts`, verify `converters list` displays them.
 
 **Notes:**
 - VTT and SRT must produce the same Markdown structure so the transcript export converter (task 1000) only needs to parse one format.
