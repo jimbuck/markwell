@@ -10,6 +10,7 @@ import { excalidrawIngest } from "../ingest/excalidraw.js";
 import { marpIngest } from "../ingest/marp.js";
 import { jsonIngest } from "../ingest/json.js";
 import { documentExport } from "../export/document.js";
+import { spreadsheetExport } from "../export/spreadsheet.js";
 
 let registry: ConverterRegistry | null = null;
 
@@ -40,6 +41,7 @@ export function getRegistry(): ConverterRegistry {
 
     // ── Export converters ──
     registry.registerExport(documentExport);
+    registry.registerExport(spreadsheetExport);
   }
   return registry;
 }

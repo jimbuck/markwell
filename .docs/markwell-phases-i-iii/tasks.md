@@ -233,7 +233,7 @@ Markwell is a CLI tool that converts documents to and from Markdown. Markdown (a
 
 ---
 
-### [ ] 0800 - Export Converter: Spreadsheet (CSV to XLSX)
+### [x] 0800 - Export Converter: Spreadsheet (CSV to XLSX)
 
 **Overview:** Implement the spreadsheet export converter. Read one or more CSV/TSV files, create an Excel workbook with one sheet per file using `exceljs`, apply theme styles (header row formatting, column widths, number formatting), and output as `.xlsx`.
 
@@ -243,14 +243,14 @@ Markwell is a CLI tool that converts documents to and from Markdown. Markdown (a
 - `tests/fixtures/` - Sample CSV/TSV files for testing
 
 **Sub-Tasks:**
-- [ ] 0801 Implement the spreadsheet export converter skeleton in `src/export/spreadsheet.ts`: `name: "spreadsheet"`, `category: "spreadsheet"`, `formats: [{ extension: ".xlsx", mimeType: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", label: "Excel Spreadsheet" }]`.
-- [ ] 0802 Implement CSV parsing: parse each input file's content as CSV (handle commas, quoted fields, newlines within quotes). Use a lightweight CSV parser or write a simple one. Detect TSV (tab-separated) by checking for tabs in the first line.
-- [ ] 0803 Implement workbook creation: lazy-load `exceljs`, create a new `Workbook`, and for each input file, add a `Worksheet`. Infer sheet names from the input file's `relativePath` (strip extension, sanitize for Excel sheet name rules: max 31 chars, no special characters).
-- [ ] 0804 Implement data population: write parsed CSV rows into the worksheet. Attempt to auto-detect numeric values and format them as numbers rather than strings.
-- [ ] 0805 Implement theme application: apply header row styling (bold, background color, text color, freeze panes) from the theme's `spreadsheet` section. Apply auto-column-width or default column width. Apply number format from theme.
-- [ ] 0806 Write the workbook to a buffer (`workbook.xlsx.writeBuffer()`) and return it as `ExportOutput`.
-- [ ] 0807 Write unit tests: create sample CSV fixtures (single file, multiple files, TSV, file with special characters and quoted fields). Export to XLSX buffer and verify sheet count, sheet names, header styling, and data content by reading the buffer back with `exceljs`.
-- [ ] 0808 Register the spreadsheet export converter in `src/cli/setup-registry.ts`.
+- [x] 0801 Implement the spreadsheet export converter skeleton in `src/export/spreadsheet.ts`: `name: "spreadsheet"`, `category: "spreadsheet"`, `formats: [{ extension: ".xlsx", mimeType: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", label: "Excel Spreadsheet" }]`.
+- [x] 0802 Implement CSV parsing: parse each input file's content as CSV (handle commas, quoted fields, newlines within quotes). Use a lightweight CSV parser or write a simple one. Detect TSV (tab-separated) by checking for tabs in the first line.
+- [x] 0803 Implement workbook creation: lazy-load `exceljs`, create a new `Workbook`, and for each input file, add a `Worksheet`. Infer sheet names from the input file's `relativePath` (strip extension, sanitize for Excel sheet name rules: max 31 chars, no special characters).
+- [x] 0804 Implement data population: write parsed CSV rows into the worksheet. Attempt to auto-detect numeric values and format them as numbers rather than strings.
+- [x] 0805 Implement theme application: apply header row styling (bold, background color, text color, freeze panes) from the theme's `spreadsheet` section. Apply auto-column-width or default column width. Apply number format from theme.
+- [x] 0806 Write the workbook to a buffer (`workbook.xlsx.writeBuffer()`) and return it as `ExportOutput`.
+- [x] 0807 Write unit tests: create sample CSV fixtures (single file, multiple files, TSV, file with special characters and quoted fields). Export to XLSX buffer and verify sheet count, sheet names, header styling, and data content by reading the buffer back with `exceljs`.
+- [x] 0808 Register the spreadsheet export converter in `src/cli/setup-registry.ts`.
 
 **Notes:**
 - Lazy-load `exceljs`.
