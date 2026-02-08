@@ -61,7 +61,7 @@ Markwell is a CLI tool that converts documents to and from Markdown. Markdown (a
 
 ---
 
-### [ ] 0300 - CLI Framework and Convert Command
+### [x] 0300 - CLI Framework and Convert Command
 
 **Overview:** Wire up the CLI using `commander`. Implement the `convert` command with glob support (`fast-glob`), the `--to` flag with `category:format` parsing, `-o` output path, `--force`, `--dry-run`, `--verbose`, `--theme`, and the overwrite-prompt behavior. Implement the `converters list` and `converters info` subcommands. Handle batch processing with continue-on-error and summary output.
 
@@ -109,15 +109,15 @@ Markwell is a CLI tool that converts documents to and from Markdown. Markdown (a
 - `tests/fixtures/` - Sample Office documents for testing
 
 **Sub-Tasks:**
-- [ ] 0401 Create a shared OOXML detection utility (`src/ingest/utils/ooxml.ts`) that checks the first 4 bytes of a buffer for the PK zip signature (`0x504B0304`). Provide helper functions like `isOoxmlZip(buffer)`, `hasZipEntry(buffer, entryPattern)` for checking specific entries (e.g., `word/document.xml`, `xl/workbook.xml`, `ppt/presentation.xml`).
-- [ ] 0402 Implement the DOCX ingest converter in `src/ingest/docx.ts`: `name: "docx"`, `extensions: [".docx", ".doc"]`, `canProcess` checks for OOXML zip + `word/document.xml` entry. The `ingest` method lazy-loads `mammoth`, calls `mammoth.convertToMarkdown(buffer)`, and returns the markdown. Extract images to the `assets` map.
-- [ ] 0403 Create sample `.docx` test fixture (`tests/fixtures/sample.docx`) with headings, bold/italic, a bulleted list, a table, and a link. Write unit tests verifying the ingest output contains the expected Markdown elements.
-- [ ] 0404 Implement the XLSX ingest converter in `src/ingest/xlsx.ts`: `name: "xlsx"`, `extensions: [".xlsx", ".xls", ".xlsm"]`, `canProcess` checks for OOXML zip + `xl/workbook.xml`. The `ingest` method lazy-loads `exceljs`, iterates over worksheets, converts each sheet to CSV, and returns `files` array with `relativePath` set to sanitized sheet name + `.csv`.
-- [ ] 0405 Implement sheet name sanitization: replace characters invalid for filenames (`/`, `\`, `:`, `*`, `?`, `"`, `<`, `>`, `|`) with underscores. Trim whitespace. Handle duplicate names by appending a numeric suffix.
-- [ ] 0406 Create sample `.xlsx` test fixture (`tests/fixtures/sample.xlsx`) with at least 2 sheets, numeric data, text, and an empty sheet. Write tests verifying correct CSV output per sheet and sanitized filenames.
-- [ ] 0407 Implement the PPTX ingest converter in `src/ingest/pptx.ts`: `name: "pptx"`, `extensions: [".pptx", ".ppt"]`, `canProcess` checks for OOXML zip + `ppt/presentation.xml`. The `ingest` method lazy-loads `markitdown` and converts the presentation to Markdown.
-- [ ] 0408 Create sample `.pptx` test fixture (`tests/fixtures/sample.pptx`) with a title slide, a content slide with bullet points, and a slide with speaker notes. Write tests verifying slide content appears as Markdown sections and speaker notes are included.
-- [ ] 0409 Register all three converters in `src/cli/setup-registry.ts` (replacing any stubs), verify `converters list` displays them.
+- [x] 0401 Create a shared OOXML detection utility (`src/ingest/utils/ooxml.ts`) that checks the first 4 bytes of a buffer for the PK zip signature (`0x504B0304`). Provide helper functions like `isOoxmlZip(buffer)`, `hasZipEntry(buffer, entryPattern)` for checking specific entries (e.g., `word/document.xml`, `xl/workbook.xml`, `ppt/presentation.xml`).
+- [x] 0402 Implement the DOCX ingest converter in `src/ingest/docx.ts`: `name: "docx"`, `extensions: [".docx", ".doc"]`, `canProcess` checks for OOXML zip + `word/document.xml` entry. The `ingest` method lazy-loads `mammoth`, calls `mammoth.convertToMarkdown(buffer)`, and returns the markdown. Extract images to the `assets` map.
+- [x] 0403 Create sample `.docx` test fixture (`tests/fixtures/sample.docx`) with headings, bold/italic, a bulleted list, a table, and a link. Write unit tests verifying the ingest output contains the expected Markdown elements.
+- [x] 0404 Implement the XLSX ingest converter in `src/ingest/xlsx.ts`: `name: "xlsx"`, `extensions: [".xlsx", ".xls", ".xlsm"]`, `canProcess` checks for OOXML zip + `xl/workbook.xml`. The `ingest` method lazy-loads `exceljs`, iterates over worksheets, converts each sheet to CSV, and returns `files` array with `relativePath` set to sanitized sheet name + `.csv`.
+- [x] 0405 Implement sheet name sanitization: replace characters invalid for filenames (`/`, `\`, `:`, `*`, `?`, `"`, `<`, `>`, `|`) with underscores. Trim whitespace. Handle duplicate names by appending a numeric suffix.
+- [x] 0406 Create sample `.xlsx` test fixture (`tests/fixtures/sample.xlsx`) with at least 2 sheets, numeric data, text, and an empty sheet. Write tests verifying correct CSV output per sheet and sanitized filenames.
+- [x] 0407 Implement the PPTX ingest converter in `src/ingest/pptx.ts`: `name: "pptx"`, `extensions: [".pptx", ".ppt"]`, `canProcess` checks for OOXML zip + `ppt/presentation.xml`. The `ingest` method lazy-loads `markitdown` and converts the presentation to Markdown.
+- [x] 0408 Create sample `.pptx` test fixture (`tests/fixtures/sample.pptx`) with a title slide, a content slide with bullet points, and a slide with speaker notes. Write tests verifying slide content appears as Markdown sections and speaker notes are included.
+- [x] 0409 Register all three converters in `src/cli/setup-registry.ts` (replacing any stubs), verify `converters list` displays them.
 
 **Notes:**
 - All heavy dependencies (`mammoth`, `exceljs`, `markitdown`) must be lazy-loaded via dynamic `import()`.
