@@ -36,7 +36,7 @@ Markwell is a CLI tool that converts documents to and from Markdown. Markdown (a
 
 ---
 
-### [ ] 0200 - Core Types and Converter Registry
+### [x] 0200 - Core Types and Converter Registry
 
 **Overview:** Define the shared TypeScript interfaces (`IngestConverter`, `ExportConverter`, `OutputFile`, `CanProcessInput`, `IngestInput`, `IngestOutput`, `ExportInput`, `ExportOutput`, `ExportCategory`, `ExportFormat`) and implement the `ConverterRegistry` class. The registry handles two-stage ingest resolution (extension filtering → `canProcess` content inspection) and category-based export resolution.
 
@@ -74,18 +74,18 @@ Markwell is a CLI tool that converts documents to and from Markdown. Markdown (a
 - `src/core/logger.ts` - Simple logger utility that respects `--verbose` flag
 
 **Sub-Tasks:**
-- [ ] 0301 Create `src/core/logger.ts` — a simple logger with methods like `info()`, `verbose()`, `error()`, `warn()`. The `verbose()` method should only output when `--verbose` is enabled. Store verbose state as a module-level flag.
-- [ ] 0302 Implement the main CLI program in `src/cli/index.ts` using `commander`: register `--version` (from package.json), `--help`, and subcommands (`convert`, `converters`, `themes`, `install-skills` — themes and install-skills as stubs for now).
-- [ ] 0303 Implement `--to` flag parsing in a utility function: parse `"document"` → `{ category: "document", formats: [] }`, `"document:pdf"` → `{ category: "document", formats: ["pdf"] }`, `"document:docx,pdf"` → `{ category: "document", formats: ["docx", "pdf"] }`. Validate category is one of the four allowed values.
-- [ ] 0304 Implement output path resolution: given an input file path, an output extension, and an optional `-o` flag value, compute the output file path. Handle `-o` as a directory (append filename with new extension) or as a specific file path.
-- [ ] 0305 Implement overwrite prompt logic: check if output file exists, if `--force` is not set and stdin is a TTY, prompt `"<file> already exists. Overwrite? [y/N]"`. In non-TTY environments, refuse with an error suggesting `--force`.
-- [ ] 0306 Implement the convert command handler in `src/cli/commands/convert.ts`: accept file-or-glob argument, expand globs via `fast-glob`, read each file into a buffer, resolve the appropriate converter (ingest or export based on `--to`), run the conversion, write output. Loop through all files, catch errors per file, continue processing, and print a summary at the end.
-- [ ] 0307 Implement `--dry-run` mode: when set, run through all the same logic (glob expansion, converter resolution, output path computation) but prefix output with `[DRY RUN]` and skip actual file writes.
-- [ ] 0308 Implement `--verbose` mode: log which converter was selected for each file, processing duration (using `performance.now()`), and any intermediate steps.
-- [ ] 0309 Implement `converters list` command in `src/cli/commands/converters.ts`: display all registered ingest converters (name, extensions) and export converters (name, category, formats) in a formatted table.
-- [ ] 0310 Implement `converters info <name>` command: look up a converter by name and display its details (extensions or formats, category, description).
-- [ ] 0311 Create a `src/cli/setup-registry.ts` file that instantiates a `ConverterRegistry`, registers all ingest and export converters in the correct order (specific before generic), and exports the configured registry instance. For now, register placeholder/stub converters that will be replaced in tasks 0400–0600 and 0700–1000.
-- [ ] 0312 Write unit tests for: `--to` flag parsing, output path resolution, overwrite prompt logic (mock stdin), dry-run output, batch error summary.
+- [x] 0301 Create `src/core/logger.ts` — a simple logger with methods like `info()`, `verbose()`, `error()`, `warn()`. The `verbose()` method should only output when `--verbose` is enabled. Store verbose state as a module-level flag.
+- [x] 0302 Implement the main CLI program in `src/cli/index.ts` using `commander`: register `--version` (from package.json), `--help`, and subcommands (`convert`, `converters`, `themes`, `install-skills` — themes and install-skills as stubs for now).
+- [x] 0303 Implement `--to` flag parsing in a utility function: parse `"document"` → `{ category: "document", formats: [] }`, `"document:pdf"` → `{ category: "document", formats: ["pdf"] }`, `"document:docx,pdf"` → `{ category: "document", formats: ["docx", "pdf"] }`. Validate category is one of the four allowed values.
+- [x] 0304 Implement output path resolution: given an input file path, an output extension, and an optional `-o` flag value, compute the output file path. Handle `-o` as a directory (append filename with new extension) or as a specific file path.
+- [x] 0305 Implement overwrite prompt logic: check if output file exists, if `--force` is not set and stdin is a TTY, prompt `"<file> already exists. Overwrite? [y/N]"`. In non-TTY environments, refuse with an error suggesting `--force`.
+- [x] 0306 Implement the convert command handler in `src/cli/commands/convert.ts`: accept file-or-glob argument, expand globs via `fast-glob`, read each file into a buffer, resolve the appropriate converter (ingest or export based on `--to`), run the conversion, write output. Loop through all files, catch errors per file, continue processing, and print a summary at the end.
+- [x] 0307 Implement `--dry-run` mode: when set, run through all the same logic (glob expansion, converter resolution, output path computation) but prefix output with `[DRY RUN]` and skip actual file writes.
+- [x] 0308 Implement `--verbose` mode: log which converter was selected for each file, processing duration (using `performance.now()`), and any intermediate steps.
+- [x] 0309 Implement `converters list` command in `src/cli/commands/converters.ts`: display all registered ingest converters (name, extensions) and export converters (name, category, formats) in a formatted table.
+- [x] 0310 Implement `converters info <name>` command: look up a converter by name and display its details (extensions or formats, category, description).
+- [x] 0311 Create a `src/cli/setup-registry.ts` file that instantiates a `ConverterRegistry`, registers all ingest and export converters in the correct order (specific before generic), and exports the configured registry instance. For now, register placeholder/stub converters that will be replaced in tasks 0400–0600 and 0700–1000.
+- [x] 0312 Write unit tests for: `--to` flag parsing, output path resolution, overwrite prompt logic (mock stdin), dry-run output, batch error summary.
 
 **Notes:**
 - Without `--force`, prompt for overwrite confirmation; in non-TTY environments, refuse and suggest `--force`.
