@@ -11,6 +11,7 @@ import { marpIngest } from "../ingest/marp.js";
 import { jsonIngest } from "../ingest/json.js";
 import { documentExport } from "../export/document.js";
 import { spreadsheetExport } from "../export/spreadsheet.js";
+import { presentationExport } from "../export/presentation.js";
 
 let registry: ConverterRegistry | null = null;
 
@@ -42,6 +43,7 @@ export function getRegistry(): ConverterRegistry {
     // ── Export converters ──
     registry.registerExport(documentExport);
     registry.registerExport(spreadsheetExport);
+    registry.registerExport(presentationExport);
   }
   return registry;
 }

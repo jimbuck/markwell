@@ -259,7 +259,7 @@ Markwell is a CLI tool that converts documents to and from Markdown. Markdown (a
 
 ---
 
-### [ ] 0900 - Export Converter: Presentation (Markdown to PPTX/HTML/PDF via MARP)
+### [x] 0900 - Export Converter: Presentation (Markdown to PPTX/HTML/PDF via MARP)
 
 **Overview:** Implement the presentation export converter using MARP (`@marp-team/marp-cli`). Convert Markdown to `.pptx`, `.html`, and `.pdf`. Apply theme settings for slide styling, pagination, and custom CSS. MARP is a regular dependency.
 
@@ -269,12 +269,12 @@ Markwell is a CLI tool that converts documents to and from Markdown. Markdown (a
 - `tests/fixtures/` - Sample MARP-flavored Markdown files
 
 **Sub-Tasks:**
-- [ ] 0901 Implement the presentation export converter skeleton in `src/export/presentation.ts`: `name: "presentation"`, `category: "presentation"`, `formats: [{ extension: ".pptx", ... }, { extension: ".html", ... }, { extension: ".pdf", ... }]`.
-- [ ] 0902 Implement MARP integration: import `@marp-team/marp-cli` and use its API (or invoke it as a subprocess) to convert Markdown to the requested output format. Pass the input Markdown content, output format, and any MARP-specific options.
-- [ ] 0903 Implement theme application: read the `presentation` section of the resolved theme and inject MARP directives into the Markdown frontmatter before conversion. Map theme properties to MARP directives: `theme`, `paginate`, `backgroundColor`, `header`, `footer`, and custom `style` CSS.
-- [ ] 0904 Handle the case where the input Markdown already has MARP frontmatter: merge theme settings with existing frontmatter (theme settings take precedence unless the frontmatter explicitly overrides).
-- [ ] 0905 Write unit tests: create a sample MARP Markdown file, export to HTML (easiest to verify), and check that the output contains expected slide content and theme-applied styles. Test PPTX and PDF output by verifying the buffer is non-empty and has the correct MIME type.
-- [ ] 0906 Register the presentation export converter in `src/cli/setup-registry.ts`.
+- [x] 0901 Implement the presentation export converter skeleton in `src/export/presentation.ts`: `name: "presentation"`, `category: "presentation"`, `formats: [{ extension: ".pptx", ... }, { extension: ".html", ... }, { extension: ".pdf", ... }]`.
+- [x] 0902 Implement MARP integration: import `@marp-team/marp-cli` and use its API (or invoke it as a subprocess) to convert Markdown to the requested output format. Pass the input Markdown content, output format, and any MARP-specific options.
+- [x] 0903 Implement theme application: read the `presentation` section of the resolved theme and inject MARP directives into the Markdown frontmatter before conversion. Map theme properties to MARP directives: `theme`, `paginate`, `backgroundColor`, `header`, `footer`, and custom `style` CSS.
+- [x] 0904 Handle the case where the input Markdown already has MARP frontmatter: merge theme settings with existing frontmatter (theme settings take precedence unless the frontmatter explicitly overrides).
+- [x] 0905 Write unit tests: create a sample MARP Markdown file, export to HTML (easiest to verify), and check that the output contains expected slide content and theme-applied styles. Test PPTX and PDF output by verifying the buffer is non-empty and has the correct MIME type.
+- [x] 0906 Register the presentation export converter in `src/cli/setup-registry.ts`.
 
 **Notes:**
 - MARP is a regular dependency (always installed).
