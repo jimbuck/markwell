@@ -205,7 +205,7 @@ Markwell is a CLI tool that converts documents to and from Markdown. Markdown (a
 
 ---
 
-### [ ] 0700 - Export Converter: Document (Markdown to DOCX)
+### [x] 0700 - Export Converter: Document (Markdown to DOCX)
 
 **Overview:** Implement the document export converter. Parse Markdown into an AST (via `unified`/`remark`), map AST nodes to `docx` npm package elements, and produce a styled `.docx` file. Apply theme styles for typography, colors, spacing, page layout, headers/footers, and table formatting. Handle embedded images from the `assets/` directory. Document PDF export is deferred.
 
@@ -215,15 +215,15 @@ Markwell is a CLI tool that converts documents to and from Markdown. Markdown (a
 - `tests/fixtures/` - Sample Markdown files for export testing
 
 **Sub-Tasks:**
-- [ ] 0701 Set up Markdown-to-AST parsing utility (`src/export/utils/markdown-parser.ts`): lazy-load `unified`, `remark-parse`, and `remark-gfm` (for tables). Provide a function `parseMarkdown(content: string)` that returns an mdast tree.
-- [ ] 0702 Implement the document export converter skeleton in `src/export/document.ts`: `name: "document"`, `category: "document"`, `formats: [{ extension: ".docx", mimeType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document", label: "Word Document" }]`.
-- [ ] 0703 Implement the AST-to-DOCX mapping: walk the mdast tree and convert nodes to `docx` package elements. Map `heading` → `Paragraph` with heading style, `paragraph` → `Paragraph`, `strong` → bold `TextRun`, `emphasis` → italic `TextRun`, `link` → `ExternalHyperlink`, `code` → `TextRun` with code font, `list` → numbered/bulleted paragraphs, `blockquote` → indented paragraph with border styling.
-- [ ] 0704 Implement table rendering: convert mdast `table` nodes to `docx` `Table` elements with header row styling from the theme (background color, bold text, text color).
-- [ ] 0705 Implement theme application: read the `ResolvedTheme` from `ExportInput.theme` and apply typography (font family, size, color for headings and body), spacing (paragraph after, heading before/after), page layout (page size, margins), and header/footer text (with `{page}`, `{pages}`, `{title}`, `{date}` variable substitution).
-- [ ] 0706 Implement image embedding: scan the mdast tree for `image` nodes, resolve their `src` paths relative to the input file's `assets/` directory (or from the `ExportInput.assets` map), and embed them in the DOCX as inline images.
-- [ ] 0707 Implement Mermaid rendering: detect `code` nodes with `lang: "mermaid"`, lazy-load `@mermaid-js/mermaid-cli`, render the Mermaid code to SVG/PNG, and embed the resulting image in the DOCX.
-- [ ] 0708 Write unit tests: create a sample Markdown file with headings, paragraphs, bold/italic, a list, a table, a link, and an image reference. Export to DOCX buffer and verify (by parsing the DOCX zip) that the expected elements are present.
-- [ ] 0709 Register the document export converter in `src/cli/setup-registry.ts`.
+- [x] 0701 Set up Markdown-to-AST parsing utility (`src/export/utils/markdown-parser.ts`): lazy-load `unified`, `remark-parse`, and `remark-gfm` (for tables). Provide a function `parseMarkdown(content: string)` that returns an mdast tree.
+- [x] 0702 Implement the document export converter skeleton in `src/export/document.ts`: `name: "document"`, `category: "document"`, `formats: [{ extension: ".docx", mimeType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document", label: "Word Document" }]`.
+- [x] 0703 Implement the AST-to-DOCX mapping: walk the mdast tree and convert nodes to `docx` package elements. Map `heading` → `Paragraph` with heading style, `paragraph` → `Paragraph`, `strong` → bold `TextRun`, `emphasis` → italic `TextRun`, `link` → `ExternalHyperlink`, `code` → `TextRun` with code font, `list` → numbered/bulleted paragraphs, `blockquote` → indented paragraph with border styling.
+- [x] 0704 Implement table rendering: convert mdast `table` nodes to `docx` `Table` elements with header row styling from the theme (background color, bold text, text color).
+- [x] 0705 Implement theme application: read the `ResolvedTheme` from `ExportInput.theme` and apply typography (font family, size, color for headings and body), spacing (paragraph after, heading before/after), page layout (page size, margins), and header/footer text (with `{page}`, `{pages}`, `{title}`, `{date}` variable substitution).
+- [x] 0706 Implement image embedding: scan the mdast tree for `image` nodes, resolve their `src` paths relative to the input file's `assets/` directory (or from the `ExportInput.assets` map), and embed them in the DOCX as inline images.
+- [x] 0707 Implement Mermaid rendering: detect `code` nodes with `lang: "mermaid"`, lazy-load `@mermaid-js/mermaid-cli`, render the Mermaid code to SVG/PNG, and embed the resulting image in the DOCX.
+- [x] 0708 Write unit tests: create a sample Markdown file with headings, paragraphs, bold/italic, a list, a table, a link, and an image reference. Export to DOCX buffer and verify (by parsing the DOCX zip) that the expected elements are present.
+- [x] 0709 Register the document export converter in `src/cli/setup-registry.ts`.
 
 **Notes:**
 - Lazy-load `docx`, `unified`, `remark-parse`, `remark-gfm`, and `@mermaid-js/mermaid-cli`.

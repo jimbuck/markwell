@@ -9,6 +9,7 @@ import { rtfIngest } from "../ingest/rtf.js";
 import { excalidrawIngest } from "../ingest/excalidraw.js";
 import { marpIngest } from "../ingest/marp.js";
 import { jsonIngest } from "../ingest/json.js";
+import { documentExport } from "../export/document.js";
 
 let registry: ConverterRegistry | null = null;
 
@@ -38,7 +39,7 @@ export function getRegistry(): ConverterRegistry {
     registry.registerIngest(jsonIngest);
 
     // ── Export converters ──
-    // Will be registered in tasks 0700-1000
+    registry.registerExport(documentExport);
   }
   return registry;
 }
