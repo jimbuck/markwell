@@ -344,7 +344,7 @@ Markwell is a CLI tool that converts documents to and from Markdown. Markdown (a
 
 ---
 
-### [ ] 1200 - Theme CLI Commands and Install-Skills Command
+### [x] 1200 - Theme CLI Commands and Install-Skills Command
 
 **Overview:** Implement the `themes list`, `themes preview`, `themes init` CLI commands, and the `install-skills` command that copies the Claude Code skill file to the project or global `.claude/` directory.
 
