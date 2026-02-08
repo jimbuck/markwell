@@ -309,7 +309,7 @@ Markwell is a CLI tool that converts documents to and from Markdown. Markdown (a
 
 ---
 
-### [ ] 1100 - Theme System: Loader, Inheritance, and Built-in Themes
+### [x] 1100 - Theme System: Loader, Inheritance, and Built-in Themes
 
 **Overview:** Implement the theme system — YAML loading, directory-tree resolution, theme inheritance via `extends`, color variable substitution (`$primary`, `$accent`), schema validation with warnings, and the four built-in themes (`default`, `professional`, `modern`, `minimal`).
 
@@ -323,18 +323,18 @@ Markwell is a CLI tool that converts documents to and from Markdown. Markdown (a
 - `src/core/theme-loader.test.ts` - Tests for theme loading, inheritance, and validation
 
 **Sub-Tasks:**
-- [ ] 1101 Define the `ResolvedTheme` TypeScript type in `src/core/theme-schema.ts`: all theme sections (colors, typography, spacing, document, spreadsheet, presentation, transcript, defaults) fully typed. Define default values for every field so that a completely empty theme still produces a valid `ResolvedTheme`.
-- [ ] 1102 Implement theme file loading in `src/core/theme-loader.ts`: read a `.markwell.yaml` file, parse it with the `yaml` package, and return the raw theme object.
-- [ ] 1103 Implement directory-tree resolution: given an input file path, walk up the directory tree looking for `.markwell.yaml`. Return the first one found, or `null`.
-- [ ] 1104 Implement theme resolution logic: check `--theme` CLI flag first (look up by name in built-in themes, or load from file path), then try directory-tree resolution, then fall back to the built-in `default` theme.
-- [ ] 1105 Implement theme inheritance: if a theme has an `extends` field, load the base theme (by name from built-ins or by path), then deep-merge the child theme on top. Support chained inheritance (theme A extends B extends C). Detect circular inheritance and throw an error.
-- [ ] 1106 Implement color variable substitution: after merging, walk the entire theme object and replace any string value matching `$<name>` (e.g., `$primary`, `$accent`) with the corresponding value from the `colors` section. Handle nested references (e.g., `$primary` in typography that references `colors.primary`).
-- [ ] 1107 Implement schema validation with warnings: after loading and merging a theme, validate known fields against expected types. Print warnings for unknown fields or invalid values (e.g., "Warning: Unknown field 'colrs' in theme — did you mean 'colors'?"). Do not fail — still apply valid fields.
-- [ ] 1108 Create the `default.yaml` built-in theme in `src/themes/`: clean, minimal styling. Define all sections with sensible defaults (Calibri font, 11pt body, standard margins, etc.).
-- [ ] 1109 Create the `professional.yaml` built-in theme: corporate/consulting style. Extends `default`. Darker primary colors, Calibri font, stricter spacing.
-- [ ] 1110 Create the `modern.yaml` built-in theme: contemporary with bolder accent colors. Extends `default`.
-- [ ] 1111 Create the `minimal.yaml` built-in theme: stripped down, content-focused. Extends `default`. Fewer decorative elements.
-- [ ] 1112 Write unit tests for: theme loading from file, directory-tree resolution (mock filesystem), inheritance (single level and chained), color variable substitution, circular inheritance detection, schema validation warnings, fallback to default theme.
+- [x] 1101 Define the `ResolvedTheme` TypeScript type in `src/core/theme-schema.ts`: all theme sections (colors, typography, spacing, document, spreadsheet, presentation, transcript, defaults) fully typed. Define default values for every field so that a completely empty theme still produces a valid `ResolvedTheme`.
+- [x] 1102 Implement theme file loading in `src/core/theme-loader.ts`: read a `.markwell.yaml` file, parse it with the `yaml` package, and return the raw theme object.
+- [x] 1103 Implement directory-tree resolution: given an input file path, walk up the directory tree looking for `.markwell.yaml`. Return the first one found, or `null`.
+- [x] 1104 Implement theme resolution logic: check `--theme` CLI flag first (look up by name in built-in themes, or load from file path), then try directory-tree resolution, then fall back to the built-in `default` theme.
+- [x] 1105 Implement theme inheritance: if a theme has an `extends` field, load the base theme (by name from built-ins or by path), then deep-merge the child theme on top. Support chained inheritance (theme A extends B extends C). Detect circular inheritance and throw an error.
+- [x] 1106 Implement color variable substitution: after merging, walk the entire theme object and replace any string value matching `$<name>` (e.g., `$primary`, `$accent`) with the corresponding value from the `colors` section. Handle nested references (e.g., `$primary` in typography that references `colors.primary`).
+- [x] 1107 Implement schema validation with warnings: after loading and merging a theme, validate known fields against expected types. Print warnings for unknown fields or invalid values (e.g., "Warning: Unknown field 'colrs' in theme — did you mean 'colors'?"). Do not fail — still apply valid fields.
+- [x] 1108 Create the `default.yaml` built-in theme in `src/themes/`: clean, minimal styling. Define all sections with sensible defaults (Calibri font, 11pt body, standard margins, etc.).
+- [x] 1109 Create the `professional.yaml` built-in theme: corporate/consulting style. Extends `default`. Darker primary colors, Calibri font, stricter spacing.
+- [x] 1110 Create the `modern.yaml` built-in theme: contemporary with bolder accent colors. Extends `default`.
+- [x] 1111 Create the `minimal.yaml` built-in theme: stripped down, content-focused. Extends `default`. Fewer decorative elements.
+- [x] 1112 Write unit tests for: theme loading from file, directory-tree resolution (mock filesystem), inheritance (single level and chained), color variable substitution, circular inheritance detection, schema validation warnings, fallback to default theme.
 
 **Notes:**
 - The `yaml` npm package is loaded eagerly (not lazy-loaded) since theme loading happens at startup for export commands.

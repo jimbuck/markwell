@@ -1,0 +1,43 @@
+name: default
+
+colors:
+  primary: "2B579A"
+  accent: "4472C4"
+  text: "333333"
+  background: "FFFFFF"
+  muted: "888888"
+
+typography:
+  fontFamily: Calibri
+  bodySize: 22
+  headingSizes:
+    1: 48
+    2: 40
+    3: 32
+    4: 28
+    5: 24
+    6: 22
+  codeFont: Courier New
+
+spacing:
+  paragraphAfter: 120
+  headingBefore: 240
+  headingAfter: 120
+
+document:
+  margins:
+    top: 1440
+    bottom: 1440
+    left: 1440
+    right: 1440
+
+spreadsheet:
+  headerBackground: "$accent"
+  headerTextColor: "FFFFFF"
+  headerBold: true
+
+presentation:
+  paginate: true
+
+transcript:
+  speakerLabels: true

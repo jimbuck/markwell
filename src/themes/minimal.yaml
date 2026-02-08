@@ -1,0 +1,32 @@
+name: minimal
+extends: default
+
+colors:
+  primary: "333333"
+  accent: "666666"
+  text: "333333"
+  muted: "999999"
+
+typography:
+  fontFamily: Arial
+  bodySize: 22
+
+spacing:
+  paragraphAfter: 80
+  headingBefore: 200
+  headingAfter: 80
+
+document:
+  margins:
+    top: 1440
+    bottom: 1440
+    left: 1440
+    right: 1440
+
+spreadsheet:
+  headerBackground: "666666"
+  headerTextColor: "FFFFFF"
+  headerBold: true
+
+presentation:
+  paginate: false

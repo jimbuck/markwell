@@ -1,0 +1,35 @@
+name: professional
+extends: default
+
+colors:
+  primary: "1B3A5C"
+  accent: "2B579A"
+  text: "222222"
+  muted: "666666"
+
+typography:
+  fontFamily: Calibri
+  bodySize: 22
+
+spacing:
+  paragraphAfter: 100
+  headingBefore: 280
+  headingAfter: 100
+
+document:
+  margins:
+    top: 1440
+    bottom: 1440
+    left: 1800
+    right: 1800
+  header: "{title}"
+  footer: "Page {page}"
+
+spreadsheet:
+  headerBackground: "$primary"
+  headerTextColor: "FFFFFF"
+  headerBold: true
+
+presentation:
+  paginate: true
+  footer: "Confidential"

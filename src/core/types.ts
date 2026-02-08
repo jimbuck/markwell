@@ -1,3 +1,12 @@
+// ── Theme types ───────────────────────────────────────────────────────
+
+import type {
+  ResolvedTheme as _ResolvedTheme,
+  RawTheme as _RawTheme,
+} from "./theme-schema.js";
+export type ResolvedTheme = _ResolvedTheme;
+export type RawTheme = _RawTheme;
+
 /**
  * A single output file from an ingest or intermediate operation.
  * Used when one source file produces multiple outputs
@@ -139,20 +148,3 @@ export interface ExportConverter {
   export(input: ExportInput): Promise<ExportOutput>;
 }
 
-// ── Theme types (placeholder until task 1100) ────────────────────────
-
-/**
- * Resolved theme configuration. All variables substituted, inheritance merged.
- * This is a placeholder — the full type will be defined in task 1100.
- */
-export interface ResolvedTheme {
-  name: string;
-  colors: Record<string, string>;
-  typography: Record<string, unknown>;
-  spacing: Record<string, unknown>;
-  document: Record<string, unknown>;
-  spreadsheet: Record<string, unknown>;
-  presentation: Record<string, unknown>;
-  transcript: Record<string, unknown>;
-  defaults: Record<string, string>;
-}

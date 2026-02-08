@@ -1,0 +1,37 @@
+name: modern
+extends: default
+
+colors:
+  primary: "E74C3C"
+  accent: "3498DB"
+  text: "2C3E50"
+  background: "FFFFFF"
+  muted: "95A5A6"
+
+typography:
+  fontFamily: Segoe UI
+  bodySize: 22
+  headingSizes:
+    1: 52
+    2: 44
+    3: 36
+
+spacing:
+  paragraphAfter: 140
+  headingBefore: 300
+  headingAfter: 140
+
+document:
+  margins:
+    top: 1440
+    bottom: 1440
+    left: 1440
+    right: 1440
+
+spreadsheet:
+  headerBackground: "$accent"
+  headerTextColor: "FFFFFF"
+
+presentation:
+  paginate: true
+  backgroundColor: "#FAFAFA"
