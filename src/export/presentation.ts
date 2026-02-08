@@ -181,7 +181,12 @@ async function renderViaCli(
     if (format === ".pptx") args.push("--pptx");
     if (format === ".pdf") args.push("--pdf");
 
-    await execFileAsync("npx", ["@marp-team/marp-cli", ...args], {
+    // Resolve the marp-cli entry point from node_modules
+    const { createRequire } = await import("node:module");
+    const require = createRequire(import.meta.url);
+    const marpCliEntry = require.resolve("@marp-team/marp-cli/marp-cli.js");
+
+    await execFileAsync(process.execPath, [marpCliEntry, ...args], {
       cwd: tmpDir,
       timeout: 60000,
     });
