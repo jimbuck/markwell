@@ -284,7 +284,7 @@ Markwell is a CLI tool that converts documents to and from Markdown. Markdown (a
 
 ---
 
-### [ ] 1000 - Export Converter: Transcript (Markdown to VTT/SRT)
+### [x] 1000 - Export Converter: Transcript (Markdown to VTT/SRT)
 
 **Overview:** Implement the transcript export converter. Parse the shared transcript Markdown format (defined in task 0500) and reconstruct proper `.vtt` (WebVTT) and `.srt` (SubRip) files with correct timestamp formatting, sequential numbering, and speaker labels (VTT only).
 
@@ -294,13 +294,13 @@ Markwell is a CLI tool that converts documents to and from Markdown. Markdown (a
 - `tests/fixtures/` - Sample transcript Markdown files
 
 **Sub-Tasks:**
-- [ ] 1001 Implement the transcript export converter skeleton in `src/export/transcript.ts`: `name: "transcript"`, `category: "transcript"`, `formats: [{ extension: ".vtt", mimeType: "text/vtt", label: "WebVTT" }, { extension: ".srt", mimeType: "application/x-subrip", label: "SubRip" }]`.
-- [ ] 1002 Implement Markdown transcript parsing: parse the shared transcript Markdown format (timestamp lines, speaker labels, text content). Extract an array of cue objects: `{ startTime, endTime, speaker?, text }`.
-- [ ] 1003 Implement VTT output generation: produce a valid WebVTT file with `WEBVTT` header, sequential cue blocks with timestamps in `HH:MM:SS.mmm` format, and speaker labels as `<v>` tags where present. Apply theme `transcript` settings (timestamp format, speaker label inclusion).
-- [ ] 1004 Implement SRT output generation: produce a valid SRT file with sequential numbering (starting at 1), timestamps in `HH:MM:SS,mmm` format (note: SRT uses comma, not period, for milliseconds), and text content. No speaker labels in SRT output.
-- [ ] 1005 Write round-trip tests: ingest a `.vtt` fixture (from task 0500) → Markdown → export back to `.vtt`. Compare the output with the original (content should match, minor formatting differences are acceptable). Do the same for `.srt`.
-- [ ] 1006 Write unit tests for edge cases: empty transcript, single cue, cue with multi-line text, cue with special characters.
-- [ ] 1007 Register the transcript export converter in `src/cli/setup-registry.ts`.
+- [x] 1001 Implement the transcript export converter skeleton in `src/export/transcript.ts`: `name: "transcript"`, `category: "transcript"`, `formats: [{ extension: ".vtt", mimeType: "text/vtt", label: "WebVTT" }, { extension: ".srt", mimeType: "application/x-subrip", label: "SubRip" }]`.
+- [x] 1002 Implement Markdown transcript parsing: parse the shared transcript Markdown format (timestamp lines, speaker labels, text content). Extract an array of cue objects: `{ startTime, endTime, speaker?, text }`.
+- [x] 1003 Implement VTT output generation: produce a valid WebVTT file with `WEBVTT` header, sequential cue blocks with timestamps in `HH:MM:SS.mmm` format, and speaker labels as `<v>` tags where present. Apply theme `transcript` settings (timestamp format, speaker label inclusion).
+- [x] 1004 Implement SRT output generation: produce a valid SRT file with sequential numbering (starting at 1), timestamps in `HH:MM:SS,mmm` format (note: SRT uses comma, not period, for milliseconds), and text content. No speaker labels in SRT output.
+- [x] 1005 Write round-trip tests: ingest a `.vtt` fixture (from task 0500) → Markdown → export back to `.vtt`. Compare the output with the original (content should match, minor formatting differences are acceptable). Do the same for `.srt`.
+- [x] 1006 Write unit tests for edge cases: empty transcript, single cue, cue with multi-line text, cue with special characters.
+- [x] 1007 Register the transcript export converter in `src/cli/setup-registry.ts`.
 
 **Notes:**
 - This converter depends on the transcript Markdown format defined in task 0501. Coordinate the format.

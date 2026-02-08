@@ -12,6 +12,7 @@ import { jsonIngest } from "../ingest/json.js";
 import { documentExport } from "../export/document.js";
 import { spreadsheetExport } from "../export/spreadsheet.js";
 import { presentationExport } from "../export/presentation.js";
+import { transcriptExport } from "../export/transcript.js";
 
 let registry: ConverterRegistry | null = null;
 
@@ -44,6 +45,7 @@ export function getRegistry(): ConverterRegistry {
     registry.registerExport(documentExport);
     registry.registerExport(spreadsheetExport);
     registry.registerExport(presentationExport);
+    registry.registerExport(transcriptExport);
   }
   return registry;
 }
