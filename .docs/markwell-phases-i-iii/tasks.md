@@ -20,14 +20,14 @@ Markwell is a CLI tool that converts documents to and from Markdown. Markdown (a
 - `src/core/types.ts` - Shared TypeScript interfaces (stub)
 
 **Sub-Tasks:**
-- [ ] 0101 Initialize `package.json` with `name: "markwell"`, `version: "0.1.0"`, `type: "module"`, `engines: { node: ">=18" }`, `bin: { markwell: "./dist/cli/index.js" }`, and `files` array. Add dev dependencies: `typescript`, `tsdown`, `vitest`, `eslint`, `@typescript-eslint/eslint-plugin`, `@typescript-eslint/parser`. Add scripts: `build`, `dev`, `test`, `lint`, `typecheck`.
-- [ ] 0102 Create `tsconfig.json` with `strict: true`, `target: "ES2022"`, `module: "Node16"`, `moduleResolution: "Node16"`, `outDir: "./dist"`, `rootDir: "./src"`, `declaration: true`, and `esModuleInterop: true`.
-- [ ] 0103 Create `tsdown.config.ts` that compiles `src/**/*.ts` to `dist/` as ESM. Ensure the CLI entry point retains its shebang line after bundling.
-- [ ] 0104 Create `vitest.config.ts` with TypeScript support and coverage reporting enabled.
-- [ ] 0105 Create `eslint.config.js` (flat config format) for TypeScript with recommended rules.
-- [ ] 0106 Create the full directory structure: `src/cli/commands/`, `src/core/`, `src/ingest/`, `src/export/`, `src/themes/`, `src/skills/`, `tests/fixtures/`.
-- [ ] 0107 Create `src/cli/index.ts` as a minimal CLI entry point with `#!/usr/bin/env node` shebang, importing `commander` and registering a placeholder `--version` and `--help`.
-- [ ] 0108 Verify the full pipeline works: `npm run build` compiles to `dist/`, `node dist/cli/index.js --help` prints help, `npm test` runs (even with zero tests), `npm run lint` passes.
+- [x] 0101 Initialize `package.json` with `name: "markwell"`, `version: "0.1.0"`, `type: "module"`, `engines: { node: ">=18" }`, `bin: { markwell: "./dist/cli/index.js" }`, and `files` array. Add dev dependencies: `typescript`, `tsdown`, `vitest`, `eslint`, `@typescript-eslint/eslint-plugin`, `@typescript-eslint/parser`. Add scripts: `build`, `dev`, `test`, `lint`, `typecheck`.
+- [x] 0102 Create `tsconfig.json` with `strict: true`, `target: "ES2022"`, `module: "Node16"`, `moduleResolution: "Node16"`, `outDir: "./dist"`, `rootDir: "./src"`, `declaration: true`, and `esModuleInterop: true`.
+- [x] 0103 Create `tsdown.config.ts` that compiles `src/**/*.ts` to `dist/` as ESM. Ensure the CLI entry point retains its shebang line after bundling.
+- [x] 0104 Create `vitest.config.ts` with TypeScript support and coverage reporting enabled.
+- [x] 0105 Create `eslint.config.js` (flat config format) for TypeScript with recommended rules.
+- [x] 0106 Create the full directory structure: `src/cli/commands/`, `src/core/`, `src/ingest/`, `src/export/`, `src/themes/`, `src/skills/`, `tests/fixtures/`.
+- [x] 0107 Create `src/cli/index.ts` as a minimal CLI entry point with `#!/usr/bin/env node` shebang, importing `commander` and registering a placeholder `--version` and `--help`.
+- [x] 0108 Verify the full pipeline works: `npm run build` compiles to `dist/`, `node dist/cli/index.js --help` prints help, `npm test` runs (even with zero tests), `npm run lint` passes.
 
 **Notes:**
 - The existing `index.js` placeholder can be removed once the real build output is in place.
