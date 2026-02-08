@@ -6,7 +6,7 @@ Markwell is a CLI tool that converts documents to and from Markdown. Markdown (a
 
 ## Tasks
 
-### [ ] 0100 - Project Scaffolding and Build Infrastructure
+### [x] 0100 - Project Scaffolding and Build Infrastructure
 
 **Overview:** Initialize the TypeScript project from scratch. Set up the package.json with scripts, ESM configuration, and bin entry. Configure TypeScript (strict mode), tsdown for building, Vitest for testing, and ESLint for linting. Create the directory structure outlined in the PRD. This is the foundation everything else depends on.
 
@@ -46,13 +46,13 @@ Markwell is a CLI tool that converts documents to and from Markdown. Markdown (a
 - `src/core/registry.test.ts` - Unit tests for the registry
 
 **Sub-Tasks:**
-- [ ] 0201 Define all ingest-related interfaces in `src/core/types.ts`: `OutputFile`, `CanProcessInput`, `IngestInput`, `IngestOutput`, and `IngestConverter` (with `name`, `extensions`, `canProcess`, `ingest` methods).
-- [ ] 0202 Define all export-related interfaces in `src/core/types.ts`: `ExportCategory` type union, `ExportFormat`, `ExportInput`, `ExportOutput`, and `ExportConverter` (with `name`, `category`, `formats`, `export` methods).
-- [ ] 0203 Implement `ConverterRegistry` class in `src/core/registry.ts` with `registerIngest()`, `registerExport()`, `listIngest()`, `listExport()` methods.
-- [ ] 0204 Implement `resolveIngest(filePath, buffer)` on the registry: filter by extension match, then call `canProcess()` on each match in registration order, return the first that returns `true`.
-- [ ] 0205 Implement `resolveExport(category, format?)` on the registry: find the export converter for the given category, validate the format is supported if provided, return `null` if not found.
-- [ ] 0206 Write unit tests for the registry: test extension filtering, `canProcess` ordering (specific before generic), export category resolution, and edge cases (no match, multiple matches, unknown format).
-- [ ] 0207 Create a `src/core/index.ts` barrel file that re-exports the registry and types.
+- [x] 0201 Define all ingest-related interfaces in `src/core/types.ts`: `OutputFile`, `CanProcessInput`, `IngestInput`, `IngestOutput`, and `IngestConverter` (with `name`, `extensions`, `canProcess`, `ingest` methods).
+- [x] 0202 Define all export-related interfaces in `src/core/types.ts`: `ExportCategory` type union, `ExportFormat`, `ExportInput`, `ExportOutput`, and `ExportConverter` (with `name`, `category`, `formats`, `export` methods).
+- [x] 0203 Implement `ConverterRegistry` class in `src/core/registry.ts` with `registerIngest()`, `registerExport()`, `listIngest()`, `listExport()` methods.
+- [x] 0204 Implement `resolveIngest(filePath, buffer)` on the registry: filter by extension match, then call `canProcess()` on each match in registration order, return the first that returns `true`.
+- [x] 0205 Implement `resolveExport(category, format?)` on the registry: find the export converter for the given category, validate the format is supported if provided, return `null` if not found.
+- [x] 0206 Write unit tests for the registry: test extension filtering, `canProcess` ordering (specific before generic), export category resolution, and edge cases (no match, multiple matches, unknown format).
+- [x] 0207 Create a `src/core/index.ts` barrel file that re-exports the registry and types.
 
 **Notes:**
 - Registration order matters — specific converters (Excalidraw, MARP) must be registered before generic ones (JSON, Markdown).
