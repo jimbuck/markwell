@@ -6,6 +6,9 @@ import { vttIngest } from "../ingest/vtt.js";
 import { srtIngest } from "../ingest/srt.js";
 import { htmlIngest } from "../ingest/html.js";
 import { rtfIngest } from "../ingest/rtf.js";
+import { excalidrawIngest } from "../ingest/excalidraw.js";
+import { marpIngest } from "../ingest/marp.js";
+import { jsonIngest } from "../ingest/json.js";
 
 let registry: ConverterRegistry | null = null;
 
@@ -15,8 +18,10 @@ export function getRegistry(): ConverterRegistry {
 
     // ── Ingest converters ──
     // Registration order matters: specific converters before generic ones.
-    // Specific converters (Excalidraw, MARP) will be registered first
-    // in task 0600, before generic ones (JSON, etc.)
+
+    // Smart detection: specific converters first
+    registry.registerIngest(excalidrawIngest); // before generic JSON
+    registry.registerIngest(marpIngest); // before any generic Markdown
 
     // Office formats
     registry.registerIngest(docxIngest);
@@ -28,6 +33,9 @@ export function getRegistry(): ConverterRegistry {
     registry.registerIngest(srtIngest);
     registry.registerIngest(htmlIngest);
     registry.registerIngest(rtfIngest);
+
+    // Generic fallbacks (must be last)
+    registry.registerIngest(jsonIngest);
 
     // ── Export converters ──
     // Will be registered in tasks 0700-1000

@@ -1,0 +1,11 @@
+{
+  // This is a line comment
+  "name": "sample-config",
+  "version": "2.0",
+  /* Block comment explaining
+     the settings below */
+  "settings": {
+    "theme": "dark",
+    "fontSize": 14
+  }
+}

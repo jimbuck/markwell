@@ -1,0 +1,51 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "https://excalidraw.com",
+  "elements": [
+    {
+      "id": "rect1",
+      "type": "rectangle",
+      "x": 100,
+      "y": 100,
+      "width": 200,
+      "height": 100,
+      "label": {
+        "text": "User Service"
+      }
+    },
+    {
+      "id": "rect2",
+      "type": "rectangle",
+      "x": 400,
+      "y": 100,
+      "width": 200,
+      "height": 100,
+      "label": {
+        "text": "Database"
+      }
+    },
+    {
+      "id": "arrow1",
+      "type": "arrow",
+      "x": 300,
+      "y": 150,
+      "width": 100,
+      "height": 0
+    },
+    {
+      "id": "text1",
+      "type": "text",
+      "x": 100,
+      "y": 250,
+      "text": "Architecture Overview"
+    },
+    {
+      "id": "text2",
+      "type": "text",
+      "x": 100,
+      "y": 300,
+      "text": "Handles user authentication and profile management"
+    }
+  ]
+}

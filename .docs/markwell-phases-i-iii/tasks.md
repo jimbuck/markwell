@@ -171,7 +171,7 @@ Markwell is a CLI tool that converts documents to and from Markdown. Markdown (a
 
 ---
 
-### [ ] 0600 - Ingest Converters: JSON, Excalidraw, MARP (Smart Detection)
+### [x] 0600 - Ingest Converters: JSON, Excalidraw, MARP (Smart Detection)
 
 **Overview:** Implement converters that share file extensions and rely on content inspection to differentiate. Excalidraw detects `"type": "excalidraw"` in JSON. MARP detects `marp: true` frontmatter in `.md` files. Generic JSON produces schema outlines. Registration order ensures specific converters are checked before generic ones.
 
@@ -185,17 +185,17 @@ Markwell is a CLI tool that converts documents to and from Markdown. Markdown (a
 - `tests/fixtures/` - Sample JSON, Excalidraw, and MARP files
 
 **Sub-Tasks:**
-- [ ] 0601 Implement the Excalidraw ingest converter in `src/ingest/excalidraw.ts`: `name: "excalidraw"`, `extensions: [".excalidraw", ".json"]`, `canProcess` parses the file as JSON and checks for `"type": "excalidraw"` at the top level. The `ingest` method extracts all text elements (labels, text content) and produces Markdown listing the drawing's text content. No Mermaid diagram generation (deferred to Phase IV).
-- [ ] 0602 Create sample Excalidraw test fixture (`tests/fixtures/sample.excalidraw`) with text elements, rectangles with labels, and arrows. Write tests verifying the converter detects the Excalidraw schema and extracts text content to Markdown.
-- [ ] 0603 Implement the MARP ingest converter in `src/ingest/marp.ts`: `name: "marp"`, `extensions: [".md", ".markdown"]`, `canProcess` checks for `marp: true` in the YAML frontmatter (parse the first `---` block). The `ingest` method passes the content through as Markdown, optionally stripping MARP-specific frontmatter fields.
-- [ ] 0604 Create sample MARP test fixture (`tests/fixtures/sample-marp.md`) with `marp: true` frontmatter and slide separators (`---`). Write tests verifying `canProcess` returns `true` for MARP files and `false` for regular Markdown.
-- [ ] 0605 Implement the generic JSON ingest converter in `src/ingest/json.ts`: `name: "json"`, `extensions: [".json", ".jsonl", ".jsonc"]`, `canProcess` confirms the file contains valid JSON (or JSONL/JSONC). The `ingest` method produces Markdown with a schema outline (listing top-level keys and their types) and, for arrays of objects, a Markdown table summarizing the data.
-- [ ] 0606 Handle JSONL: detect line-delimited JSON, parse each line, and produce a summary (number of records, common keys).
-- [ ] 0607 Handle JSONC: strip comments (`//` and `/* */`) before parsing.
-- [ ] 0608 Create sample JSON test fixtures: `tests/fixtures/sample.json` (object with nested keys), `tests/fixtures/sample.jsonl` (line-delimited), and a regular `package.json`-style file. Write tests verifying schema outlines and tabular output.
-- [ ] 0609 Test conflict resolution: verify that an Excalidraw `.json` file is handled by the Excalidraw converter (not the generic JSON converter), and that a regular `.json` file falls through to the generic JSON converter.
-- [ ] 0610 Test conflict resolution for MARP: verify that a `.md` file with `marp: true` is handled by the MARP converter, and a regular `.md` file is not processed by any ingest converter (it's already Markdown).
-- [ ] 0611 Update `src/cli/setup-registry.ts` to register converters in the correct order: Excalidraw before JSON, MARP before any generic Markdown handling.
+- [x] 0601 Implement the Excalidraw ingest converter in `src/ingest/excalidraw.ts`: `name: "excalidraw"`, `extensions: [".excalidraw", ".json"]`, `canProcess` parses the file as JSON and checks for `"type": "excalidraw"` at the top level. The `ingest` method extracts all text elements (labels, text content) and produces Markdown listing the drawing's text content. No Mermaid diagram generation (deferred to Phase IV).
+- [x] 0602 Create sample Excalidraw test fixture (`tests/fixtures/sample.excalidraw`) with text elements, rectangles with labels, and arrows. Write tests verifying the converter detects the Excalidraw schema and extracts text content to Markdown.
+- [x] 0603 Implement the MARP ingest converter in `src/ingest/marp.ts`: `name: "marp"`, `extensions: [".md", ".markdown"]`, `canProcess` checks for `marp: true` in the YAML frontmatter (parse the first `---` block). The `ingest` method passes the content through as Markdown, optionally stripping MARP-specific frontmatter fields.
+- [x] 0604 Create sample MARP test fixture (`tests/fixtures/sample-marp.md`) with `marp: true` frontmatter and slide separators (`---`). Write tests verifying `canProcess` returns `true` for MARP files and `false` for regular Markdown.
+- [x] 0605 Implement the generic JSON ingest converter in `src/ingest/json.ts`: `name: "json"`, `extensions: [".json", ".jsonl", ".jsonc"]`, `canProcess` confirms the file contains valid JSON (or JSONL/JSONC). The `ingest` method produces Markdown with a schema outline (listing top-level keys and their types) and, for arrays of objects, a Markdown table summarizing the data.
+- [x] 0606 Handle JSONL: detect line-delimited JSON, parse each line, and produce a summary (number of records, common keys).
+- [x] 0607 Handle JSONC: strip comments (`//` and `/* */`) before parsing.
+- [x] 0608 Create sample JSON test fixtures: `tests/fixtures/sample.json` (object with nested keys), `tests/fixtures/sample.jsonl` (line-delimited), and a regular `package.json`-style file. Write tests verifying schema outlines and tabular output.
+- [x] 0609 Test conflict resolution: verify that an Excalidraw `.json` file is handled by the Excalidraw converter (not the generic JSON converter), and that a regular `.json` file falls through to the generic JSON converter.
+- [x] 0610 Test conflict resolution for MARP: verify that a `.md` file with `marp: true` is handled by the MARP converter, and a regular `.md` file is not processed by any ingest converter (it's already Markdown).
+- [x] 0611 Update `src/cli/setup-registry.ts` to register converters in the correct order: Excalidraw before JSON, MARP before any generic Markdown handling.
 
 **Notes:**
 - Excalidraw-to-Mermaid conversion is deferred to Phase IV. For now, just extract text.

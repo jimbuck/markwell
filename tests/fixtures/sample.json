@@ -1,0 +1,12 @@
+{
+  "name": "sample-project",
+  "version": "1.0.0",
+  "description": "A sample JSON file for testing",
+  "config": {
+    "debug": true,
+    "maxRetries": 3,
+    "timeout": 5000
+  },
+  "tags": ["alpha", "beta", "gamma"],
+  "active": true
+}
