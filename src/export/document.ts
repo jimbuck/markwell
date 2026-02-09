@@ -409,9 +409,29 @@ export const documentExport: ExportConverter = {
         "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
       label: "Word Document",
     },
+    {
+      extension: ".pdf",
+      mimeType: "application/pdf",
+      label: "PDF Document",
+    },
+    {
+      extension: ".html",
+      mimeType: "text/html",
+      label: "HTML Document",
+    },
   ],
 
   async export(input: ExportInput): Promise<ExportOutput> {
+    if (input.format === ".pdf") {
+      throw new Error(
+        "Document PDF export is not yet implemented. Use 'docx' or 'word' instead.",
+      );
+    }
+
+    if (input.format === ".html") {
+      return renderDocumentHtml(input);
+    }
+
     const docx = await loadDocx();
 
     const content =
@@ -524,6 +544,67 @@ export const documentExport: ExportConverter = {
     };
   },
 };
+
+async function renderDocumentHtml(input: ExportInput): Promise<ExportOutput> {
+  const content = input.files[0]?.content ?? "";
+  const theme = input.theme;
+  const font = getThemeFont(theme);
+  const bodyColor = getThemeColor(theme, "text") ?? "333333";
+  const primaryColor = getThemeColor(theme, "primary") ?? "2563eb";
+  const bgColor = getThemeColor(theme, "background") ?? "ffffff";
+
+  // Use unified/remark/rehype pipeline to convert markdown to HTML
+  const { unified } = await import("unified");
+  const remarkParse = (await import("remark-parse")).default;
+  const remarkRehype = (await import("remark-rehype")).default;
+  const rehypeStringify = (await import("rehype-stringify")).default;
+
+  const result = await unified()
+    .use(remarkParse)
+    .use(remarkRehype)
+    .use(rehypeStringify)
+    .process(content);
+
+  const htmlBody = String(result);
+
+  const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  body {
+    font-family: ${font}, sans-serif;
+    color: #${bodyColor};
+    background: #${bgColor};
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    line-height: 1.6;
+  }
+  h1, h2, h3, h4, h5, h6 { color: #${primaryColor}; }
+  a { color: #${primaryColor}; }
+  code { font-family: "Courier New", monospace; background: #f5f5f5; padding: 0.2em 0.4em; border-radius: 3px; }
+  pre { background: #f5f5f5; padding: 1em; border-radius: 6px; overflow-x: auto; }
+  pre code { background: none; padding: 0; }
+  blockquote { border-left: 4px solid #${primaryColor}; margin-left: 0; padding-left: 1em; color: #666; }
+  table { border-collapse: collapse; width: 100%; }
+  th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+  th { background: #${primaryColor}; color: #fff; }
+  img { max-width: 100%; height: auto; }
+</style>
+</head>
+<body>
+${htmlBody}
+</body>
+</html>`;
+
+  return {
+    buffer: Buffer.from(html, "utf-8"),
+    mimeType: "text/html",
+    extension: ".html",
+  };
+}
 
 function resolveTemplateVars(text: string): string {
   const now = new Date();

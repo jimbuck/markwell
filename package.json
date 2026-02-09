@@ -53,8 +53,10 @@
     "fast-glob": "^3.3.0",
     "jszip": "^3.10.1",
     "mammoth": "^1.11.0",
+    "rehype-stringify": "^10.0.1",
     "remark-gfm": "^4.0.1",
     "remark-parse": "^11.0.0",
+    "remark-rehype": "^11.1.2",
     "turndown": "^7.2.2",
     "unified": "^11.0.5",
     "yaml": "^2.6.0"

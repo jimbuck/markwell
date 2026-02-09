@@ -2,7 +2,7 @@
 
 Convert documents to and from Markdown. The source from which polished documents flow.
 
-Markwell gives Claude Code and AI agents the ability to **read, create, and transform** office documents — Word files, spreadsheets, presentations, and transcripts — using Markdown as the universal hub format. Install it once, and your agent gains a complete document toolkit.
+Markwell gives Claude Code and AI agents the ability to **transform** documents — Word files, spreadsheets, presentations, and transcripts — using Markdown as the universal hub format. Install it once, and your agent gains a complete document toolkit.
 
 ## Why Markwell?
 
@@ -59,15 +59,20 @@ markwell convert data.json              # → data.md
 
 ### Creating Documents (Export)
 
-Convert Markdown into styled output:
+Convert Markdown into styled output using format aliases:
 
 ```bash
-markwell convert draft.md --to document                  # → draft.docx
-markwell convert data.csv --to spreadsheet               # → data.xlsx
-markwell convert slides.md --to presentation              # → slides.html
-markwell convert slides.md --to presentation:pptx         # → slides.pptx
-markwell convert transcript.md --to transcript:vtt        # → transcript.vtt
-markwell convert transcript.md --to transcript:srt        # → transcript.srt
+markwell convert draft.md --to docx                      # → draft.docx
+markwell convert draft.md --to word                      # → draft.docx (alias)
+markwell convert data.csv --to xlsx                      # → data.xlsx
+markwell convert data.csv --to excel                     # → data.xlsx (alias)
+markwell convert slides.md --to pptx                     # → slides.pptx
+markwell convert slides.md --to powerpoint               # → slides.pptx (alias)
+markwell convert slides.md --to html                     # → slides.html
+markwell convert slides.md --to pdf                      # → slides.pdf
+markwell convert transcript.md --to vtt                  # → transcript.vtt
+markwell convert transcript.md --to srt                  # → transcript.srt
+markwell convert draft.md --to docx,pdf                  # → draft.docx + draft.pdf
 ```
 
 ### Batch Processing
@@ -77,22 +82,33 @@ Use glob patterns to convert multiple files at once:
 ```bash
 markwell convert "docs/*.docx"                           # all Word files
 markwell convert "**/*.html" -o output/                  # recursive, custom output dir
-markwell convert "reports/*.md" --to document --force     # overwrite without prompting
+markwell convert "reports/*.md" --to docx --force          # overwrite without prompting
 ```
 
 ## Supported Formats
 
-| Category     | Ingest (read)                  | Export (create)              |
-|--------------|-------------------------------|------------------------------|
-| Document     | `.docx`, `.doc`               | `.docx`                      |
-| Spreadsheet  | `.xlsx`, `.xls`, `.xlsm`      | `.xlsx`                      |
-| Presentation | `.pptx`, `.ppt`               | `.html`, `.pptx`, `.pdf`     |
-| Transcript   | `.vtt`, `.srt`                | `.vtt`, `.srt`               |
-| Web          | `.html`, `.htm`               | —                            |
-| Rich Text    | `.rtf`                        | —                            |
-| Data         | `.json`, `.jsonl`, `.jsonc`   | —                            |
-| Drawing      | `.excalidraw`                 | —                            |
-| Slides (MD)  | `.md` (Marp format)           | —                            |
+### Ingest (read)
+
+| Category     | Extensions                        |
+| ------------ | --------------------------------- |
+| Document     | `.docx`, `.doc`                   |
+| Spreadsheet  | `.xlsx`, `.xls`, `.xlsm`         |
+| Presentation | `.pptx`, `.ppt`                   |
+| Transcript   | `.vtt`, `.srt`                    |
+| Web          | `.html`, `.htm`                   |
+| Rich Text    | `.rtf`                            |
+| Data         | `.json`, `.jsonl`, `.jsonc`      |
+| Drawing      | `.excalidraw`                     |
+| Slides (MD)  | `.md` (Marp format)               |
+
+### Export (create)
+
+| Category     | Extensions                   | Aliases                                     |
+| ------------ | ---------------------------- | ------------------------------------------- |
+| Document     | `.docx`, `.html`, `.pdf`*   | `word`, `doc`, `docx`                       |
+| Spreadsheet  | `.xlsx`                      | `excel`, `xlsx`, `xls`, `sheets`            |
+| Presentation | `.html`, `.pptx`, `.pdf`    | `powerpoint`, `slides`, `pptx`, `ppt`       |
+| Transcript   | `.vtt`, `.srt`              | `vtt`, `srt`, `transcription`               |
 
 ## CLI Reference
 
@@ -102,7 +118,7 @@ The primary command. Converts files to or from Markdown.
 
 ```
 Options:
-  --to <category[:format]>    Export category and optional format
+  --to <format>               Export format(s): docx, pptx, pdf, xlsx, vtt, srt, etc.
   -o, --output <path>         Output file or directory
   --theme <name|path>         Theme name or path to .markwell.yaml
   --force                     Overwrite existing files without prompting
@@ -110,7 +126,7 @@ Options:
   --verbose                   Show detailed processing info
 ```
 
-When `--to` is omitted, Markwell ingests the file into Markdown. When `--to` is provided, it exports Markdown to the specified format.
+When `--to` is omitted, Markwell ingests the file into Markdown. When `--to` is provided, it exports Markdown to the specified format. You can use format aliases like `powerpoint`, `word`, or `excel`, and comma-separated values for multi-format output (e.g., `--to docx,pdf`).
 
 The `--dry-run` flag is useful for previewing what an agent would do before committing to file writes.
 
@@ -142,21 +158,21 @@ Copy the Claude Code skill file to `.claude/commands/markwell.md`. With `--globa
 
 Themes control the visual styling of exported documents. Four built-in themes are included:
 
-| Theme          | Description                                              |
-|----------------|----------------------------------------------------------|
-| `default`      | Clean, minimal styling — Calibri 11pt, standard margins  |
-| `professional` | Corporate/consulting — darker palette, wider margins     |
-| `modern`       | Contemporary — bolder accent colors, Segoe UI font       |
-| `minimal`      | Stripped down — content-focused, fewer decorative elements|
+| Theme            | Description                                                 |
+| ---------------- | ----------------------------------------------------------- |
+| `default`      | Clean, minimal styling — Calibri 11pt, standard margins    |
+| `professional` | Corporate/consulting — darker palette, wider margins       |
+| `modern`       | Contemporary — bolder accent colors, Segoe UI font         |
+| `minimal`      | Stripped down — content-focused, fewer decorative elements |
 
 ### Using Themes
 
 ```bash
 # Apply a built-in theme
-markwell convert report.md --to document --theme professional
+markwell convert report.md --to docx --theme professional
 
 # Apply a custom theme file
-markwell convert report.md --to document --theme ./brand.markwell.yaml
+markwell convert report.md --to docx --theme ./brand.markwell.yaml
 ```
 
 ### Automatic Theme Discovery
@@ -168,7 +184,7 @@ If you place a `.markwell.yaml` file in your project, Markwell finds it automati
 markwell themes init
 
 # Edit .markwell.yaml to customize, then convert — theme applies automatically
-markwell convert report.md --to document
+markwell convert report.md --to docx
 ```
 
 ### Custom Themes
@@ -205,15 +221,15 @@ Color variables like `$primary` and `$accent` reference values from the `colors`
 
 ### Theme Sections
 
-| Section        | Controls                                                 |
-|----------------|----------------------------------------------------------|
-| `colors`       | Primary, accent, text, background, muted (hex values)    |
-| `typography`   | Font family, body size, heading sizes, code font          |
-| `spacing`      | Paragraph spacing, heading spacing (before/after)         |
+| Section          | Controls                                                                                       |
+| ---------------- | ---------------------------------------------------------------------------------------------- |
+| `colors`       | Primary, accent, text, background, muted (hex values)                                          |
+| `typography`   | Font family, body size, heading sizes, code font                                               |
+| `spacing`      | Paragraph spacing, heading spacing (before/after)                                              |
 | `document`     | Margins, headers, footers (with `{title}`, `{page}`, `{pages}`, `{date}` placeholders) |
-| `spreadsheet`  | Header row background, text color, bold                   |
-| `presentation` | Theme name, pagination, background color, header/footer, custom CSS |
-| `transcript`   | Speaker label inclusion                                   |
+| `spreadsheet`  | Header row background, text color, bold                                                        |
+| `presentation` | Theme name, pagination, background color, header/footer, custom CSS                            |
+| `transcript`   | Speaker label inclusion                                                                        |
 
 ### Theme Inheritance
 

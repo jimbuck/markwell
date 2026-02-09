@@ -6,39 +6,7 @@ import type { Command } from "commander";
 import fg from "fast-glob";
 import { getRegistry } from "../setup-registry.js";
 import * as logger from "../../core/logger.js";
-import type { ExportCategory } from "../../core/types.js";
-
-const VALID_CATEGORIES: ExportCategory[] = [
-  "document",
-  "spreadsheet",
-  "presentation",
-  "transcript",
-];
-
-export interface ParsedToFlag {
-  category: ExportCategory;
-  formats: string[];
-}
-
-export function parseToFlag(value: string): ParsedToFlag {
-  const [categoryPart, formatPart] = value.split(":");
-  const category = categoryPart.trim().toLowerCase();
-
-  if (!VALID_CATEGORIES.includes(category as ExportCategory)) {
-    throw new Error(
-      `Invalid category "${category}". Must be one of: ${VALID_CATEGORIES.join(", ")}`,
-    );
-  }
-
-  const formats = formatPart
-    ? formatPart
-        .split(",")
-        .map((f) => f.trim().toLowerCase())
-        .filter(Boolean)
-    : [];
-
-  return { category: category as ExportCategory, formats };
-}
+import { resolveToFlag } from "../../core/format-aliases.js";
 
 export function resolveOutputPath(
   inputFilePath: string,
@@ -105,7 +73,7 @@ export function registerConvertCommand(program: Command): void {
     .command("convert")
     .description("Convert files to or from Markdown")
     .argument("<file-or-glob>", "File path or glob pattern to convert")
-    .option("--to <category[:format]>", "Export to a category/format")
+    .option("--to <format>", "Export format(s): docx, pptx, pdf, xlsx, vtt, srt, etc.")
     .option("-o, --output <path>", "Output file or directory path")
     .option("--force", "Overwrite existing files without prompting")
     .option("--dry-run", "Show what would be done without writing files")
@@ -138,40 +106,47 @@ export function registerConvertCommand(program: Command): void {
 
           if (opts.to) {
             // ── Export mode ──
-            const parsed = parseToFlag(opts.to);
-            const formats =
-              parsed.formats.length > 0
-                ? parsed.formats
-                : [undefined]; // use default format
+            const inputContent = buffer.toString("utf-8");
+            const targets = resolveToFlag(opts.to, { inputContent });
 
-            for (const format of formats) {
+            // Validate: -o as specific file not allowed with multiple targets
+            if (targets.length > 1 && opts.output) {
+              const hasExt = path.extname(opts.output) !== "";
+              const isDir =
+                opts.output.endsWith(path.sep) ||
+                opts.output.endsWith("/");
+              let existingDir = false;
+              try {
+                existingDir = fs.statSync(opts.output).isDirectory();
+              } catch {
+                // doesn't exist yet
+              }
+              if (hasExt && !isDir && !existingDir) {
+                throw new Error(
+                  "Cannot use -o with a specific file path when exporting to multiple formats. Use a directory instead.",
+                );
+              }
+            }
+
+            for (const target of targets) {
               const converter = registry.resolveExport(
-                parsed.category,
-                format,
+                target.category,
+                target.extension.slice(1), // strip leading dot
               );
               if (!converter) {
-                const formatMsg = format
-                  ? ` with format "${format}"`
-                  : "";
                 throw new Error(
-                  `No export converter found for category "${parsed.category}"${formatMsg}`,
+                  `No export converter found for "${target.category}" with format "${target.extension}"`,
                 );
               }
 
-              const targetFormat = format
-                ? format.startsWith(".")
-                  ? format
-                  : `.${format}`
-                : converter.formats[0].extension;
-
               const outputPath = resolveOutputPath(
                 filePath,
-                targetFormat,
+                target.extension,
                 opts.output,
               );
 
               logger.verbose(
-                `Using export converter: ${converter.name} (${targetFormat})`,
+                `Using export converter: ${converter.name} (${target.extension})`,
               );
 
               if (opts.dryRun) {
@@ -210,10 +185,10 @@ export function registerConvertCommand(program: Command): void {
                 files: [
                   {
                     relativePath: path.basename(filePath),
-                    content: buffer.toString("utf-8"),
+                    content: inputContent,
                   },
                 ],
-                format: targetFormat,
+                format: target.extension,
                 theme,
                 options: {},
               });

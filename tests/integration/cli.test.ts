@@ -176,7 +176,29 @@ describe("CLI end-to-end", () => {
         "convert",
         csvPath,
         "--to",
-        "spreadsheet",
+        "xlsx",
+        "-o",
+        outputPath,
+        "--force",
+      ]);
+
+      expect(exitCode).toBe(0);
+      expect(existsSync(outputPath)).toBe(true);
+    }, { timeout: 30000 });
+
+    it("converts CSV to XLSX with alias 'excel'", async () => {
+      tmpDir = join(tmpdir(), `markwell-cli-export-excel-${Date.now()}`);
+      mkdirSync(tmpDir, { recursive: true });
+
+      const fixtureDir = join(import.meta.dirname, "../fixtures");
+      const csvPath = join(fixtureDir, "sample.csv");
+      const outputPath = join(tmpDir, "output.xlsx");
+
+      const { exitCode } = await runCli([
+        "convert",
+        csvPath,
+        "--to",
+        "excel",
         "-o",
         outputPath,
         "--force",
@@ -213,7 +235,7 @@ describe("CLI end-to-end", () => {
         "convert",
         mdPath,
         "--to",
-        "transcript:vtt",
+        "vtt",
         "-o",
         outputPath,
         "--force",

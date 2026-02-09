@@ -1,5 +1,6 @@
 import type { Command } from "commander";
 import { getRegistry } from "../setup-registry.js";
+import { getAliasesForCategory } from "../../core/format-aliases.js";
 
 export function registerConvertersCommand(program: Command): void {
   const converters = program
@@ -30,8 +31,10 @@ export function registerConvertersCommand(program: Command): void {
       } else {
         for (const c of exportList) {
           const formats = c.formats.map((f) => f.extension).join(", ");
+          const aliases = getAliasesForCategory(c.category);
+          const aliasStr = aliases.length > 0 ? `  aliases: ${aliases.join(", ")}` : "";
           console.log(
-            `  ${c.name.padEnd(15)} [${c.category}] ${formats}`,
+            `  ${c.name.padEnd(15)} [${c.category}] ${formats}${aliasStr}`,
           );
         }
       }

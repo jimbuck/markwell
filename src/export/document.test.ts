@@ -23,8 +23,10 @@ describe("documentExport", () => {
   it("has correct name, category, and formats", () => {
     expect(documentExport.name).toBe("document");
     expect(documentExport.category).toBe("document");
-    expect(documentExport.formats).toHaveLength(1);
+    expect(documentExport.formats).toHaveLength(3);
     expect(documentExport.formats[0].extension).toBe(".docx");
+    expect(documentExport.formats[1].extension).toBe(".pdf");
+    expect(documentExport.formats[2].extension).toBe(".html");
   });
 
   it("produces a valid DOCX buffer", { timeout: 15000 }, async () => {
