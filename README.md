@@ -29,7 +29,7 @@ AI agents work in plain text. Documents live in binary formats like `.docx`, `.x
 npm install -g markwell
 ```
 
-Requires Node.js 18 or later. All dependencies are included — no additional system software needed.
+Requires Node.js 20 or later. All dependencies are included — no additional system software needed.
 
 ### Claude Code Integration
 
