@@ -1,6 +1,6 @@
 {
   "name": "markwell",
-  "version": "0.0.0-development",
+  "version": "0.1.1",
   "description": "Convert documents to and from Markdown. The source from which polished documents flow.",
   "type": "module",
   "main": "./dist/cli/index.js",
