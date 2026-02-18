@@ -86,13 +86,41 @@ export function registerConvertCommand(program: Command): void {
 
       const registry = getRegistry();
 
-      // Expand glob pattern
-      const files = await fg(fileOrGlob, { absolute: true });
+      // Resolve input files. Try as a literal file path first, then
+      // fall back to glob expansion. This is essential for Windows where
+      // backslashes in paths are misinterpreted by fast-glob as escape
+      // characters, causing files to silently not match.
+      let files: string[];
+      const resolved = path.resolve(fileOrGlob);
 
-      if (files.length === 0) {
-        logger.error(`No files found matching "${fileOrGlob}"`);
-        process.exitCode = 1;
-        return;
+      try {
+        const stat = await fsp.stat(resolved);
+        if (stat.isFile()) {
+          files = [resolved];
+        } else {
+          logger.error(`"${fileOrGlob}" is a directory, not a file. Use a glob pattern (e.g. "${fileOrGlob}/*.docx") to convert files in a directory.`);
+          process.exitCode = 1;
+          return;
+        }
+      } catch (statErr) {
+        // Not a directly accessible file — try as a glob pattern.
+        // convertPathToPattern normalizes Windows backslashes to forward
+        // slashes so fast-glob can process them correctly.
+        const pattern = fg.convertPathToPattern(fileOrGlob);
+        files = await fg(pattern, { absolute: true });
+
+        if (files.length === 0) {
+          const code = (statErr as NodeJS.ErrnoException).code;
+          if (code === "EACCES" || code === "EPERM") {
+            logger.error(`Permission denied: "${fileOrGlob}"`);
+          } else if (code === "ENOENT" && !fg.isDynamicPattern(pattern)) {
+            logger.error(`File not found: "${fileOrGlob}"`);
+          } else {
+            logger.error(`No files found matching "${fileOrGlob}"`);
+          }
+          process.exitCode = 1;
+          return;
+        }
       }
 
       let succeeded = 0;
