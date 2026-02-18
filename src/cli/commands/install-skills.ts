@@ -1,15 +1,17 @@
 import type { Command } from "commander";
-import { existsSync, mkdirSync, copyFileSync } from "node:fs";
+import { existsSync, mkdirSync, cpSync } from "node:fs";
 import { join } from "node:path";
 import { homedir } from "node:os";
 
-function getSkillSourcePath(): string {
-  // In dev: src/skills/. In dist: dist/skills/
-  const devPath = join(import.meta.dirname, "../../../src/skills/markwell.md");
+function getSkillSourceDir(): string {
+  // Paths are relative to the bundled output at dist/cli/index.js.
+  // In dev the src/ tree sits alongside dist/; in a published package
+  // only dist/ exists.
+  const devPath = join(import.meta.dirname, "../../src/skills/markwell");
   if (existsSync(devPath)) return devPath;
-  const distPath = join(import.meta.dirname, "../../skills/markwell.md");
+  const distPath = join(import.meta.dirname, "../skills/markwell");
   if (existsSync(distPath)) return distPath;
-  return devPath; // fallback
+  return distPath; // fallback
 }
 
 export function registerInstallSkillsCommand(program: Command): void {
@@ -18,9 +20,10 @@ export function registerInstallSkillsCommand(program: Command): void {
     .description("Install Claude Code skill file")
     .option("--global", "Install to ~/.claude/ instead of project .claude/")
     .action((opts: { global?: boolean }) => {
-      const sourcePath = getSkillSourcePath();
+      const sourceDir = getSkillSourceDir();
+      const sourceFile = join(sourceDir, "SKILL.md");
 
-      if (!existsSync(sourcePath)) {
+      if (!existsSync(sourceFile)) {
         console.error("Skill template not found. Package may be corrupted.");
         process.exitCode = 1;
         return;
@@ -28,22 +31,20 @@ export function registerInstallSkillsCommand(program: Command): void {
 
       let targetDir: string;
       if (opts.global) {
-        targetDir = join(homedir(), ".claude", "commands");
+        targetDir = join(homedir(), ".claude", "skills", "markwell");
       } else {
-        targetDir = join(process.cwd(), ".claude", "commands");
+        targetDir = join(process.cwd(), ".claude", "skills", "markwell");
       }
 
-      const targetPath = join(targetDir, "markwell.md");
-
-      // Create directory if needed
+      // Create directory and copy skill files
       if (!existsSync(targetDir)) {
         mkdirSync(targetDir, { recursive: true });
       }
 
-      copyFileSync(sourcePath, targetPath);
+      cpSync(sourceDir, targetDir, { recursive: true });
 
       const location = opts.global ? "global (~/.claude/)" : "project (.claude/)";
       console.log(`Installed markwell skill to ${location}`);
-      console.log(`  ${targetPath}`);
+      console.log(`  ${join(targetDir, "SKILL.md")}`);
     });
 }

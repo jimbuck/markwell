@@ -4,15 +4,16 @@ import {
   readFileSync,
   rmSync,
   mkdirSync,
-  copyFileSync,
+  cpSync,
 } from "node:fs";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 
-const skillSourcePath = join(
+const skillSourceDir = join(
   import.meta.dirname,
-  "../../../src/skills/markwell.md",
+  "../../../src/skills/markwell",
 );
+const skillSourceFile = join(skillSourceDir, "SKILL.md");
 
 describe("install-skills", () => {
   let tmpDir: string;
@@ -22,11 +23,11 @@ describe("install-skills", () => {
   });
 
   it("skill template file exists", () => {
-    expect(existsSync(skillSourcePath)).toBe(true);
+    expect(existsSync(skillSourceFile)).toBe(true);
   });
 
   it("skill template contains usage examples", () => {
-    const content = readFileSync(skillSourcePath, "utf-8");
+    const content = readFileSync(skillSourceFile, "utf-8");
     expect(content).toContain("markwell convert");
     expect(content).toContain("--to document");
     expect(content).toContain("--to spreadsheet");
@@ -34,22 +35,22 @@ describe("install-skills", () => {
     expect(content).toContain("--to transcript");
   });
 
-  it("copies skill file to target directory", () => {
+  it("copies skill directory to target", () => {
     tmpDir = join(tmpdir(), `markwell-skill-${Date.now()}`);
-    const targetDir = join(tmpDir, ".claude", "commands");
+    const targetDir = join(tmpDir, ".claude", "skills", "markwell");
     mkdirSync(targetDir, { recursive: true });
-    const targetPath = join(targetDir, "markwell.md");
 
-    copyFileSync(skillSourcePath, targetPath);
+    cpSync(skillSourceDir, targetDir, { recursive: true });
 
-    expect(existsSync(targetPath)).toBe(true);
-    const content = readFileSync(targetPath, "utf-8");
+    const targetFile = join(targetDir, "SKILL.md");
+    expect(existsSync(targetFile)).toBe(true);
+    const content = readFileSync(targetFile, "utf-8");
     expect(content).toContain("Markwell");
   });
 
   it("creates directories if they don't exist", () => {
     tmpDir = join(tmpdir(), `markwell-skill-mkdir-${Date.now()}`);
-    const targetDir = join(tmpDir, ".claude", "commands");
+    const targetDir = join(tmpDir, ".claude", "skills", "markwell");
 
     expect(existsSync(targetDir)).toBe(false);
     mkdirSync(targetDir, { recursive: true });

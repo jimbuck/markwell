@@ -15,7 +15,7 @@
     "node": ">=20"
   },
   "scripts": {
-    "build": "tsdown && cp -r src/themes dist/themes && cp -r src/skills dist/skills",
+    "build": "tsdown && node -e \"const fs=require('fs');fs.cpSync('src/themes','dist/themes',{recursive:true});fs.cpSync('src/skills','dist/skills',{recursive:true})\"",
     "dev": "tsdown --watch",
     "test": "vitest run",
     "test:watch": "vitest",

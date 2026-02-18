@@ -1,3 +1,9 @@
+---
+name: markwell
+description: Convert documents to and from Markdown using the markwell CLI
+allowed-tools: Bash
+---
+
 # Markwell - Document Converter
 
 Markwell converts documents to and from Markdown. Markdown is the universal hub format.
