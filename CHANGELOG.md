@@ -1,3 +1,11 @@
+## [0.1.4](https://github.com/jimbuck/markwell/compare/v0.1.3...v0.1.4) (2026-02-18)
+
+
+### Bug Fixes
+
+* resolve input files directly before falling back to fast-glob ([97315c7](https://github.com/jimbuck/markwell/commit/97315c7a70bef2606092adfa74be2f901f05dd95))
+* update skill install for Windows and new Claude Code skills format ([1f9a1fc](https://github.com/jimbuck/markwell/commit/1f9a1fc711d022ee2d9b8ba197ccee826553f2a2))
+
 ## [0.1.3](https://github.com/jimbuck/markwell/compare/v0.1.2...v0.1.3) (2026-02-09)
 
 
