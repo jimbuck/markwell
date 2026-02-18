@@ -11,7 +11,7 @@ import { cuesToMarkdown, type Cue } from "./vtt.js";
  * sequential number, then timestamp line with -->
  */
 function isSrtFormat(head: string): boolean {
-  const lines = head.trim().split("\n");
+  const lines = head.trim().replace(/\r\n/g, "\n").split("\n");
   if (lines.length < 2) return false;
 
   // First line should be a number (cue index)
@@ -33,7 +33,8 @@ function normalizeTimestamp(ts: string): string {
 
 function parseSrtContent(content: string): Cue[] {
   const cues: Cue[] = [];
-  const blocks = content.trim().split(/\n\n+/);
+  const normalized = content.replace(/\r\n/g, "\n");
+  const blocks = normalized.trim().split(/\n\n+/);
 
   for (const block of blocks) {
     const lines = block.trim().split("\n");

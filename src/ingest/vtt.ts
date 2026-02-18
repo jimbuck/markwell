@@ -44,7 +44,7 @@ function parseVttTimestamp(line: string): { start: string; end: string } | null 
 }
 
 function parseVttContent(content: string): Cue[] {
-  const lines = content.split("\n");
+  const lines = content.replace(/\r\n/g, "\n").split("\n");
   const cues: Cue[] = [];
 
   let i = 0;
