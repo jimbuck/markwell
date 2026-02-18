@@ -1,3 +1,10 @@
+## [0.1.5](https://github.com/jimbuck/markwell/compare/v0.1.4...v0.1.5) (2026-02-18)
+
+
+### Bug Fixes
+
+* normalize \r\n line endings in SRT, VTT, and transcript parsers ([aa779ee](https://github.com/jimbuck/markwell/commit/aa779eef0dbad4e8c0cfb81565e2187378d8049f))
+
 ## [0.1.4](https://github.com/jimbuck/markwell/compare/v0.1.3...v0.1.4) (2026-02-18)
 
 
